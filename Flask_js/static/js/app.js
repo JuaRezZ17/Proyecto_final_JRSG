@@ -1,4 +1,6 @@
+const VERSION = "v1"
 let get_registros = new XMLHttpRequest();
+let post_registro = new XMLHttpRequest();
 
 function get_registros_handler() {
     if (this.readyState === 4) {
@@ -43,8 +45,29 @@ function get_registros_handler() {
     }
 }
 
+function get_tasa(event) {
+    event.preventDefault();
+
+    const moneda_from = document.getElementById("select_moneda_from").value;
+    const moneda_to = document.getElementById("select_moneda_to").value;
+
+    post_registro.open("GET", "http://127.0.0.1:5000/api/" + VERSION + "/tasa/" + moneda_from + "/" + moneda_to, true);
+    // post_registro.onload = get_tasa_handler;
+    // post_registro.onerror = function() {alert("No se ha podido completar la petición de tasa.")};
+    // post_registro.send();
+
+    alert("Hemos llegado")
+}
+
+function get_tasa_handler() {
+    
+}
+
 window.onload = function() {
-    get_registros.open("GET", "http://127.0.0.1:5000/api/v1/movimientos", true);
+    let calculator = document.getElementById("btn_tasa");
+    calculator.addEventListener("click", get_tasa);
+
+    get_registros.open("GET", "http://127.0.0.1:5000/api/" + VERSION + "/movimientos", true);
     get_registros.onload = get_registros_handler;
     get_registros.onerror = function() {alert("No se ha podido completar la petición de movimientos.")};
     get_registros.send();

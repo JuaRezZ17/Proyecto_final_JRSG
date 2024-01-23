@@ -1,3 +1,1 @@
 ORIGIN_DATA = "data/movimientos.sqlite"
-VERSION = "v1"
-API_KEY = "E4CF523D-8730-46D6-8E2E-1665C24C30A0"
