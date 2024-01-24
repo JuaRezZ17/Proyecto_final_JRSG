@@ -25,6 +25,7 @@
         <br>
         <label>From:</label>
         <select id="select_moneda_from">
+            <option value="" selected disabled hidden>Elija una moneda:</option>
             <option value="EUR">EUR</option>
             <option value="BTC">BTC</option>
             <option value="ETH">ETH</option>
@@ -38,6 +39,7 @@
         </select>
         <label>To:</label>
         <select id="select_moneda_to">
+            <option value="" selected disabled hidden>Elija una moneda:</option>
             <option value="EUR">EUR</option>
             <option value="BTC">BTC</option>
             <option value="ETH">ETH</option>
@@ -51,17 +53,19 @@
         </select>
         <br>
         <label>Quantity:</label>
-        <input type="text"></input>
-        <button id="btn_tasa">calculator</button>
+        <input type="text" id="input_quantity_from"></input>
+        <button id="btn_calcular">calculator</button>
         <label>Quantity:</label>
-        <input type="text" readonly></input>
+        <label id="label_quantity_to"></label>
         <br>
         <label>P.U:</label>
-        <input type="number" readonly></input>
+        <label id="label_pu"></label>
         <br>
-        <button>OK</button>
+        <button>Cancelar</button>
+        <button id="btn_guardar">OK</button>
         <br>
         <br>
+        <button>Update status</button>
         <label>Invertido:</label>
         <input type="number" readonly></input>
         <br>
@@ -73,6 +77,7 @@
         <br>
         <label>V. actual:</label>
         <input type="number" readonly></input>
+        <button>Añadir movimiento</button>
     </section>
     <footer>
         <strong class="footer">&copy; 2024 - Todos los derechos reservados. - Juan Rafael Sánchez García</strong>
