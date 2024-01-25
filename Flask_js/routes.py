@@ -3,6 +3,7 @@ from flask import render_template, jsonify, request
 from Flask_js.utils.utils import VERSION
 from Flask_js.models import *
 import sqlite3
+# from http import HTTPStatus
 
 # Ruta de la página principal.
 @app.route("/")
@@ -13,11 +14,11 @@ def index():
 @app.route(f"/api/{VERSION}/movimientos")
 def movimientos():
     try:
-        movimientos = get_registros()
+        records = get_records()
         return jsonify(
             {
                 "status": "success",
-                "data": movimientos
+                "data": records
             }
         )
     except sqlite3.Error:
@@ -28,10 +29,10 @@ def movimientos():
             }
         ), 400
     
-# Ruta para calcular el cambio de moneda_from a moneda_to.
+# Ruta para calcular la tasa de moneda_from a moneda_to.
 @app.route(f"/api/{VERSION}/tasa/<string:moneda_from>/<string:moneda_to>")
-def intercambio(moneda_from, moneda_to):
-    rate = get_tasa(moneda_from, moneda_to)
+def tasa(moneda_from, moneda_to):
+    rate = get_rate(moneda_from, moneda_to)
 
     if rate != "":
         return jsonify(
@@ -83,4 +84,19 @@ def movimiento():
 # Ruta para realizar el estado de la cartera.
 @app.route(f"/api/{VERSION}/status")
 def estado():
-    pass
+    try:
+        status = get_status()
+
+        return jsonify(
+            {
+                "status": "success",
+                "data": status
+            }
+        ), 200
+    except sqlite3.Error:
+        return jsonify(
+            {
+                "status": "fail",
+                "mensaje": str(sqlite3.Error)
+            }
+        ), 400
