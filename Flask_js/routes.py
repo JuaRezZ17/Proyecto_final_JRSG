@@ -3,14 +3,14 @@ from flask import render_template, jsonify, request
 from Flask_js.utils.utils import VERSION
 from Flask_js.models import *
 import sqlite3
-# from http import HTTPStatus
+from http import HTTPStatus
 
-# Ruta de la página principal.
+# Ruta para cargar la página principal.
 @app.route("/")
 def index():
     return render_template("index.html")
 
-# Ruta para cargar movimientos de la base de datos.
+# Ruta para cargar registros de la base de datos.
 @app.route(f"/api/{VERSION}/movimientos")
 def movimientos():
     try:
@@ -20,14 +20,14 @@ def movimientos():
                 "status": "success",
                 "data": records
             }
-        )
+        ), HTTPStatus.OK
     except sqlite3.Error:
         return jsonify(
             {
                 "status": "fail",
                 "mensaje": str(sqlite3.Error)
             }
-        ), 400
+        ), HTTPStatus.BAD_REQUEST
     
 # Ruta para calcular la tasa de moneda_from a moneda_to.
 @app.route(f"/api/{VERSION}/tasa/<string:moneda_from>/<string:moneda_to>")
@@ -41,16 +41,16 @@ def tasa(moneda_from, moneda_to):
                 "rate": rate,
                 "monedas": [moneda_from, moneda_to]
             }
-        ), 201
+        ), HTTPStatus.CREATED
     else:
         return jsonify(
             {
                 "status": "fail",
                 "mensaje": str(sqlite3.Error)
             }
-        ), 400
+        ), HTTPStatus.BAD_REQUEST
 
-# Ruta para realizar el movimiento.
+# Ruta para insertar un registro.
 @app.route(f"/api/{VERSION}/movimiento", methods=["POST"])
 def movimiento():
     data = request.json
@@ -64,7 +64,7 @@ def movimiento():
                     "status": "fail",
                     "mensaje": "Saldo insuficiente."
                 }
-            ), 200
+            ), HTTPStatus.OK
         else:
             return jsonify(
                 {
@@ -72,31 +72,31 @@ def movimiento():
                     "id": id,
                     "monedas": [data['from_moneda'], data['to_moneda']]
                 }
-            ), 201
+            ), HTTPStatus.CREATED
     except sqlite3.Error:
         return jsonify(
             {
                 "status": "fail",
                 "mensaje": str(sqlite3.Error)
             }
-        ), 400
+        ), HTTPStatus.BAD_REQUEST
 
-# Ruta para realizar el estado de la cartera.
+# Ruta para cargar el balance de la cartera.
 @app.route(f"/api/{VERSION}/status")
-def estado():
+def status():
     try:
-        status = get_status()
+        var_status = get_status()
 
         return jsonify(
             {
                 "status": "success",
-                "data": status
+                "data": var_status
             }
-        ), 200
+        ), HTTPStatus.OK
     except sqlite3.Error:
         return jsonify(
             {
                 "status": "fail",
                 "mensaje": str(sqlite3.Error)
             }
-        ), 400
+        ), HTTPStatus.BAD_REQUEST

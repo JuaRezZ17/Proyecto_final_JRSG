@@ -1,62 +1,85 @@
 from Flask_js.conexion import Conexion
 import requests
-from Flask_js.utils.utils import API, API_KEY, criptos
-from Flask_js.utils.functions import cantidad_cripto
+from Flask_js.utils.utils import API, API_KEY, cryptos
+from Flask_js.utils.functions import crypto_quantity
 
-# Método para cargar movimientos de la base de datos.
+# Función para cargar los registros.
 def get_records():
-    # Creamos la conexión y pasamos la query.
-    conexion = Conexion("SELECT * FROM movements ORDER BY date DESC;")
-    filas = conexion.resultado.fetchall()
-    columnas = conexion.resultado.description
+    conexion = Conexion("SELECT * FROM movements ORDER BY date DESC, time DESC;")
+    rows = conexion.result.fetchall()
+    columns = conexion.result.description
 
-    lista_diccionario = []
+    # Creamos una lista de diccionarios con los registros.
+    dictionary_list = []
 
-    for f in filas:
-        posicion = 0
-        diccionario = {}
-        for c in columnas:
-            diccionario[c[0]] = f[posicion]
-            posicion += 1
+    for r in rows:
+        position = 0
+        dictionary = {}
+        for c in columns:
+            dictionary[c[0]] = r[position]
+            position += 1
 
-        lista_diccionario.append(diccionario)
+        dictionary_list.append(dictionary)
 
     conexion.conexion.close()
 
-    return lista_diccionario
+    # Guardamos el balance de cada crypto en un diccionario.
+    crypto_balance = {}
+    for crypto in cryptos:
+        crypto_balance[crypto.lower()] = crypto_quantity(crypto)
+        
+    dictionary_list.append(crypto_balance)
 
-# Método para consulta el cambio de moneda_from a moneda_to en API.
+    return dictionary_list
+
+# Función para consultar la tasa de moneda_from a moneda_to en la API.
 def get_rate(moneda_from, moneda_to):
     response = requests.get(API + moneda_from + "/" + moneda_to + "?apikey=" + API_KEY)
-    return response.json()["rate"]
+    if response.status_code == 200:
+        return response.json()["rate"]
+    else:
+        return ""
 
+# Función para insertar un registro.
 def post_record(records):
+    # Comprobamos que hay balance positivo en la moneda que se quiere vender.
     if records[2] != "EUR":
-        if cantidad_cripto(records[2]) < float(records[3]):
+        if crypto_quantity(records[2]) < float(records[3]):
             return -1
         
     conexion = Conexion("INSERT INTO movements(date, time, moneda_from, cantidad_from, moneda_to, cantidad_to) VALUES(?, ?, ?, ?, ?, ?);", records)
     conexion.conexion.commit()
+    # Guardamos el "id" del último registro.
     id = conexion.cursor.lastrowid
     conexion.conexion.close()
     
     return id
 
+# Función para cargar el estado de la cuenta.
 def get_status():
     values = {}
 
     conexion = Conexion("SELECT ifnull(sum(cantidad_from), 0) FROM movements WHERE moneda_from=\"EUR\";")
-    values["invertido"] = conexion.resultado.fetchall()[0][0];
+    values["invertido"] = conexion.result.fetchall()[0][0];
 
     conexion = Conexion("SELECT ifnull(sum(cantidad_to), 0) FROM movements WHERE moneda_to=\"EUR\";")
-    values["recuperado"] = conexion.resultado.fetchall()[0][0];
+    values["recuperado"] = conexion.result.fetchall()[0][0];
 
     values["valor_compra"] = values["invertido"] - values["recuperado"];
 
-    crypto_quantity = 0
-    for cripto in criptos:
-        crypto_quantity += cantidad_cripto(cripto) * get_rate(cripto, "EUR")
+    # Comprobamos si hay registros de cada crypto para evitar hacer peticiones innecesarias a la API.
+    cryptos_total_quantity = 0
+    for crypto in cryptos:
+        var_crypto_quantity = crypto_quantity(crypto)
+        if var_crypto_quantity == 0:
+            continue
+        else:
+            rate = get_rate(crypto, "EUR") 
+            if rate == "":
+                rate = 0
 
-    values["valor_actual"] = crypto_quantity
+            cryptos_total_quantity += var_crypto_quantity * rate
+
+    values["valor_actual"] = cryptos_total_quantity
 
     return values
