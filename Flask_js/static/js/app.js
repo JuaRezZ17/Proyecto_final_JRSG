@@ -81,10 +81,10 @@ function get_status_handler() {
             const values = json_values.data;
 
             // Modificamos el valor de las labels para mostrar los datos por pantalla.
-            document.getElementById("label_invested").innerText = values.invertido.toFixed(2) + "€";
-            document.getElementById("label_recovered").innerText = values.recuperado.toFixed(2) + "€";
-            document.getElementById("label_purchase_value").innerText = values.valor_compra.toFixed(2) + "€";
-            document.getElementById("label_current_value").innerText = values.valor_actual.toFixed(2) + "€";
+            document.getElementById("label_invested").innerText = values.invertido.toFixed(2) + " €";
+            document.getElementById("label_recovered").innerText = values.recuperado.toFixed(2) + " €";
+            document.getElementById("label_purchase_value").innerText = values.valor_compra.toFixed(2) + " €";
+            document.getElementById("label_current_value").innerText = values.valor_actual.toFixed(2) + " €";
         } else {
             const error = JSON.parse(this.responseText);
             alert(error.mensaje);

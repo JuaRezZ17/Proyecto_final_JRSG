@@ -1,0 +1,105 @@
+body {
+    font-family: 'Ubuntu', sans-serif;
+    background-color: #D1D2F9;
+}
+
+header {
+    position: relative;
+    top: 0vh;
+    height: 10vh;
+    background-color: #A3BCF9;
+}
+
+header strong {
+    position: absolute;
+    top: 1.9vh;
+    left: 8vw;
+    font-size: 4vh;
+}
+
+main {
+    position: relative;
+    margin: 0 auto;
+}
+
+footer {
+    position: fixed;
+    bottom: 0; 
+    left: 0; 
+    z-index: 10;
+    width: 100vw;
+    height: 5vh;
+    background-color: #A3BCF9;
+}
+
+footer strong {
+    position: relative;
+    top: 1.2vh;
+    left: 4vw;
+    font-size: 2vh;
+}
+
+.div_container {
+    position: relative;
+    margin-top: 4vh;
+    margin-left: 8vw;
+    margin-right: 4vw;
+    overflow: hidden;
+}
+
+.div_table {
+    float: left;
+    margin-right: 8vw;
+}
+
+.div_status {
+    float: left;
+    margin-top: 4px;
+}
+
+table {
+    position: relative;
+    height: 432px;
+    overflow-y: auto;
+}
+
+tr {
+    border-bottom: solid 1px #A3BCF9;
+}
+
+th {
+    padding-right: 8vw;
+    font-size: 1.2em;
+}
+
+td {
+    font-size: 1em;
+}
+
+.label_titulo {
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+.label_normal {
+    font-size: 1em;
+    margin-top: 1.8vh;
+}
+
+.btn-lg {
+    width: 158.67px;
+    border: none;
+    color: white;
+    background-color: #576490;
+}
+
+.btn-lg:hover {
+    color: white;
+    background-color: #A3BCF9;
+}
+
+.label_span_update {
+    position: relative;
+    top: 5px;
+    margin-left: 0.3em;
+}

@@ -1,18 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KeepCoin</title>
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
-    <script src="../static/js/app.js"></script>
-</head>
-<body>
-    <header>
-        <h1>KeepCoin</h1>
-    </header>
-    <section>
-        <table name="table_records" id="table_records">
+{% extends "base.html" %}
+{% block content %}
+<div class="div_container">
+    <div class="div_table">
+        <table id="table_records">
             <tr>
                 <th>Fecha</th>
                 <th>Hora</th>
@@ -22,67 +12,83 @@
                 <th>Cantidad</th>
             </tr>
         </table>
+    </div>
+    <div class="div_status">
+        <label class="label_titulo">Balance de cuenta</label>
+        <label class="material-symbols-outlined label_span_update">update</label>
         <br>
-        <label>From:</label>
-        <select id="select_moneda_from">
-            <option value="" selected disabled hidden>Elija una moneda:</option>
-            <option value="EUR">EUR</option>
-            <option value="BTC">BTC</option>
-            <option value="ETH">ETH</option>
-            <option value="USDT">USDT</option>
-            <option value="BNB">BNB</option>
-            <option value="XRP">XRP</option>
-            <option value="ADA">ADA</option>
-            <option value="SOL">SOL</option>
-            <option value="DOT">DOT</option>
-            <option value="MATIC">MATIC</option>
-        </select>
-        <label>To:</label>
-        <select id="select_moneda_to">
-            <option value="" selected disabled hidden>Elija una moneda:</option>
-            <option value="EUR">EUR</option>
-            <option value="BTC">BTC</option>
-            <option value="ETH">ETH</option>
-            <option value="USDT">USDT</option>
-            <option value="BNB">BNB</option>
-            <option value="XRP">XRP</option>
-            <option value="ADA">ADA</option>
-            <option value="SOL">SOL</option>
-            <option value="DOT">DOT</option>
-            <option value="MATIC">MATIC</option>
-        </select>
+        <label class="label_normal"><strong>Invertido:</strong></label>
+        <label id="label_invested" class="label_normal"></label>
         <br>
-        <label>Quantity:</label>
-        <input type="number" id="input_cantidad_from"></input>
-        <button id="btn_calcular">calculator</button>
-        <label>Quantity:</label>
-        <label id="label_cantidad_to"></label>
+        <label class="label_normal"><strong>Recuperado:</strong></label>
+        <label id="label_recovered" class="label_normal"></label>
         <br>
-        <label>P.U:</label>
-        <label id="label_pu"></label>
+        <label class="label_normal"><strong>V. de compra:</strong></label>
+        <label id="label_purchase_value" class="label_normal"></label>
         <br>
-        <button>Cancelar</button>
-        <button id="btn_guardar">OK</button>
+        <label class="label_normal"><strong>V. actual:</strong></label>
+        <label id="label_current_value" class="label_normal"></label>
         <br>
         <br>
-        <button>Update status</button>
-        <br>
-        <label>Invertido:</label>
-        <label id="label_invested"></label>
-        <br>
-        <label>Recuperado:</label>
-        <label id="label_recovered"></label>
-        <br>
-        <label>V. de compra:</label>
-        <label id="label_purchase_value"></label>
-        <br>
-        <label>V. actual:</label>
-        <label id="label_current_value"></label>
-        <br>
-        <button>Añadir movimiento</button>
-    </section>
-    <footer>
-        <strong class="footer">&copy; 2024 - Todos los derechos reservados. - Juan Rafael Sánchez García</strong>
-    </footer>
-</body>
-</html>
+        <button type="button" class="btn btn-lg">+</button>
+    </div>
+</div>
+    <!-- <br>
+    <label>From:</label>
+    <select id="select_moneda_from">
+        <option value="" selected disabled hidden>Elija una moneda:</option>
+        <option value="EUR">EUR</option>
+        <option value="BTC">BTC</option>
+        <option value="ETH">ETH</option>
+        <option value="USDT">USDT</option>
+        <option value="BNB">BNB</option>
+        <option value="XRP">XRP</option>
+        <option value="ADA">ADA</option>
+        <option value="SOL">SOL</option>
+        <option value="DOT">DOT</option>
+        <option value="MATIC">MATIC</option>
+    </select>
+    <label>To:</label>
+    <select id="select_moneda_to">
+        <option value="" selected disabled hidden>Elija una moneda:</option>
+        <option value="EUR">EUR</option>
+        <option value="BTC">BTC</option>
+        <option value="ETH">ETH</option>
+        <option value="USDT">USDT</option>
+        <option value="BNB">BNB</option>
+        <option value="XRP">XRP</option>
+        <option value="ADA">ADA</option>
+        <option value="SOL">SOL</option>
+        <option value="DOT">DOT</option>
+        <option value="MATIC">MATIC</option>
+    </select>
+    <br>
+    <label>Quantity:</label>
+    <input type="number" id="input_cantidad_from"></input>
+    <button id="btn_calcular">calculator</button>
+    <label>Quantity:</label>
+    <label id="label_cantidad_to"></label>
+    <br>
+    <label>P.U:</label>
+    <label id="label_pu"></label>
+    <br>
+    <button>Cancelar</button>
+    <button id="btn_guardar">OK</button>
+    <br>
+    <br>
+    <button>Update status</button>
+    <br>
+    <label>Invertido:</label>
+    <label id="label_invested"></label>
+    <br>
+    <label>Recuperado:</label>
+    <label id="label_recovered"></label>
+    <br>
+    <label>V. de compra:</label>
+    <label id="label_purchase_value"></label>
+    <br>
+    <label>V. actual:</label>
+    <label id="label_current_value"></label>
+    <br>
+    <button>Añadir movimiento</button> -->
+{% endblock %}
