@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="div_container">
+<div class="div_container1">
     <div class="div_table">
         <table id="table_records">
             <tr>
@@ -15,7 +15,7 @@
     </div>
     <div class="div_status">
         <label class="label_titulo">Balance de cuenta</label>
-        <label class="material-symbols-outlined label_span_update">update</label>
+        <label class="material-icons label_span_update">update</label>
         <br>
         <label class="label_normal"><strong>Invertido:</strong></label>
         <label id="label_invested" class="label_normal"></label>
@@ -33,62 +33,64 @@
         <button type="button" class="btn btn-lg">+</button>
     </div>
 </div>
-    <!-- <br>
-    <label>From:</label>
-    <select id="select_moneda_from">
-        <option value="" selected disabled hidden>Elija una moneda:</option>
-        <option value="EUR">EUR</option>
-        <option value="BTC">BTC</option>
-        <option value="ETH">ETH</option>
-        <option value="USDT">USDT</option>
-        <option value="BNB">BNB</option>
-        <option value="XRP">XRP</option>
-        <option value="ADA">ADA</option>
-        <option value="SOL">SOL</option>
-        <option value="DOT">DOT</option>
-        <option value="MATIC">MATIC</option>
-    </select>
-    <label>To:</label>
-    <select id="select_moneda_to">
-        <option value="" selected disabled hidden>Elija una moneda:</option>
-        <option value="EUR">EUR</option>
-        <option value="BTC">BTC</option>
-        <option value="ETH">ETH</option>
-        <option value="USDT">USDT</option>
-        <option value="BNB">BNB</option>
-        <option value="XRP">XRP</option>
-        <option value="ADA">ADA</option>
-        <option value="SOL">SOL</option>
-        <option value="DOT">DOT</option>
-        <option value="MATIC">MATIC</option>
-    </select>
-    <br>
-    <label>Quantity:</label>
-    <input type="number" id="input_cantidad_from"></input>
-    <button id="btn_calcular">calculator</button>
-    <label>Quantity:</label>
-    <label id="label_cantidad_to"></label>
-    <br>
-    <label>P.U:</label>
-    <label id="label_pu"></label>
-    <br>
-    <button>Cancelar</button>
-    <button id="btn_guardar">OK</button>
-    <br>
-    <br>
-    <button>Update status</button>
-    <br>
-    <label>Invertido:</label>
-    <label id="label_invested"></label>
-    <br>
-    <label>Recuperado:</label>
-    <label id="label_recovered"></label>
-    <br>
-    <label>V. de compra:</label>
-    <label id="label_purchase_value"></label>
-    <br>
-    <label>V. actual:</label>
-    <label id="label_current_value"></label>
-    <br>
-    <button>Añadir movimiento</button> -->
+<div class="div_container2">
+    <form>
+        <div class="div_form">
+            <label for="floatingInput" class="label_select"><strong>From:</strong></label>
+            <select class="form-select select_moneda">
+                <option value="" selected disabled hidden>Elija una moneda:</option>
+                <option value="EUR">EUR</option>
+                <option value="BTC">BTC</option>
+                <option value="ETH">ETH</option>
+                <option value="USDT">USDT</option>
+                <option value="BNB">BNB</option>
+                <option value="XRP">XRP</option>
+                <option value="ADA">ADA</option>
+                <option value="SOL">SOL</option>
+                <option value="DOT">DOT</option>
+                <option value="MATIC">MATIC</option>
+            </select>
+        </div>
+        <div class="div_form">
+            <label for="floatingInput" class="label_select"><strong>To:</strong></label>
+            <select class="form-select select_moneda">
+                <option value="" selected disabled hidden>Elija una moneda:</option>
+                <option value="EUR">EUR</option>
+                <option value="BTC">BTC</option>
+                <option value="ETH">ETH</option>
+                <option value="USDT">USDT</option>
+                <option value="BNB">BNB</option>
+                <option value="XRP">XRP</option>
+                <option value="ADA">ADA</option>
+                <option value="SOL">SOL</option>
+                <option value="DOT">DOT</option>
+                <option value="MATIC">MATIC</option>
+            </select>
+        </div>
+        <br>
+        <div class="div_form">
+            <label for="floatingInput" class="label_select"><strong>Cantidad:</strong></label>
+            <input type="number" class="form-control input_cantidad_from">
+            <span class="material-icons span_calculate" style="font-size: 40px;">calculate</span>
+        </div>
+        <div class="div_form">
+            <label for="floatingInput"  class="label_select"><strong>Cantidad:</strong></label>
+            <input type="number" class="form-control input_cantidad_to" readonly>
+        </div>
+        <br>
+        <div class="div_space1">
+            <label></label>
+        </div>
+        <div class="div_form">
+            <label for="floatingInput" class="label_select"><strong>PU:</strong></label>
+            <input type="number" class="form-control input_pu" readonly>
+        </div>
+        <br>
+        <div class="div_space2"></div>
+        <div class="div_form">
+            <button type="button" class="btn btn-primary btn-md">Cerrar</button>
+            <button type="button" class="btn btn-primary btn-md" >Guardar</button>
+        </div>
+    </form>
+</div>
 {% endblock %}

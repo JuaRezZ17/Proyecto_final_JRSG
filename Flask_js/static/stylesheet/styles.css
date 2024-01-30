@@ -1,5 +1,9 @@
 body {
+    position: relative;
+    min-height: 100vh;
+    padding-bottom: 5vh;
     font-family: 'Ubuntu', sans-serif;
+    font-size: 1em;
     background-color: #D1D2F9;
 }
 
@@ -23,38 +27,37 @@ main {
 }
 
 footer {
-    position: fixed;
-    bottom: 0; 
-    left: 0; 
-    z-index: 10;
-    width: 100vw;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
     height: 5vh;
     background-color: #A3BCF9;
+    
 }
 
 footer strong {
     position: relative;
     top: 1.2vh;
-    left: 4vw;
+    left: 8vw;
     font-size: 2vh;
 }
 
-.div_container {
+.div_container1 {
     position: relative;
     margin-top: 4vh;
     margin-left: 8vw;
-    margin-right: 4vw;
+    margin-right: 8vw;
     overflow: hidden;
 }
 
 .div_table {
     float: left;
-    margin-right: 8vw;
 }
 
 .div_status {
     float: left;
     margin-top: 4px;
+    margin-left: 9.9em;
 }
 
 table {
@@ -72,17 +75,12 @@ th {
     font-size: 1.2em;
 }
 
-td {
-    font-size: 1em;
-}
-
 .label_titulo {
     font-size: 1.2em;
     font-weight: bold;
 }
 
 .label_normal {
-    font-size: 1em;
     margin-top: 1.8vh;
 }
 
@@ -102,4 +100,96 @@ td {
     position: relative;
     top: 5px;
     margin-left: 0.3em;
+    color: #576490;
+}
+
+.div_container2 {
+    /* display: none; */
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 2vh;
+    margin-left: 8vw;
+    margin-right: 20vw;
+}
+
+.div_form {
+    position: relative;
+    display: inline-block;
+    margin-top: 3vh;
+    margin-right: 12em;
+}
+
+.label_select {
+    margin-right: 0.5em;
+}
+
+.select_moneda {
+    display: inline-block;
+    width: 12em;
+}
+
+.select_moneda:active {
+    box-shadow: red;
+}
+
+.input_cantidad_from {
+    display: inline-block;
+    width: 10.3em;
+}
+
+.span_calculate {
+    position: absolute;
+    display: inline-block;
+    color: #576490;
+}
+
+.input_cantidad_to {
+    display: inline-block;
+    width: 9em;
+    border: none;
+    box-shadow: none;
+}
+
+.input_cantidad_to:focus {
+    border: none;
+    box-shadow: none;
+}
+
+.input_pu {
+    display: inline-block;
+    width: 11.7em;
+}
+
+.input_pu:focus {
+    border: none;
+    box-shadow: none;
+}
+
+.btn-md {
+    border: none;
+    color: white;
+    background-color: #576490;
+    margin-bottom: 2em;
+}
+
+.btn-md:hover {
+    color: white;
+    background-color: #A3BCF9;
+}
+
+.div_space1 {
+    position: relative;
+    display: inline-block;
+    margin-right: 27.4em;
+}
+
+.div_space2 {
+    position: relative;
+    display: inline-block;
+    margin-right: 31.7em;
+}
+
+button:active {
+    background-color: none;
+    color: none;
 }
