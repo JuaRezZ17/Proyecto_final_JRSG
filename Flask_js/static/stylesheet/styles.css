@@ -1,73 +1,80 @@
+/* base.html */
+/* Body */
 body {
-    position: relative;
-    min-height: 100vh;
     padding-bottom: 5vh;
     font-family: 'Ubuntu', sans-serif;
     font-size: 1em;
     background-color: #D1D2F9;
 }
 
+/* Header */
 header {
+    height: 10vh;
     position: relative;
     top: 0vh;
-    height: 10vh;
     background-color: #A3BCF9;
 }
 
 header strong {
     position: absolute;
-    top: 1.9vh;
+    top: 1.7vh;
     left: 8vw;
     font-size: 4vh;
 }
 
-main {
-    position: relative;
-    margin: 0 auto;
-}
-
-footer {
+.alert {
     position: absolute;
+    display: inline;
     bottom: 0;
+} 
+
+/* Footer */
+footer {
     width: 100%;
     height: 5vh;
+    position: fixed;
+    bottom: 0;
     background-color: #A3BCF9;
-    
 }
 
 footer strong {
     position: relative;
-    top: 1.2vh;
+    top: 1.1vh;
     left: 8vw;
     font-size: 2vh;
 }
 
+a {
+    color: #576490;
+}
+
+/* index.html */
+/* Div principal */
 .div_container1 {
-    position: relative;
+    overflow: hidden;
     margin-top: 4vh;
     margin-left: 8vw;
     margin-right: 8vw;
-    overflow: hidden;
 }
 
+/* Div de la tabla */
 .div_table {
+    max-height: 385.5px;
     float: left;
 }
 
-.div_status {
-    float: left;
-    margin-top: 4px;
-    margin-left: 9.9em;
-}
-
+/* Tabla */
 table {
+    display: block;
+    height: 385.5px;
     position: relative;
-    height: 432px;
+    margin-right: 9.9em;
     overflow-y: auto;
 }
 
 tr {
-    border-bottom: solid 1px #A3BCF9;
+    height: 35px;
+    border-bottom: solid 1.7px #A3BCF9;
 }
 
 th {
@@ -75,121 +82,142 @@ th {
     font-size: 1.2em;
 }
 
+::-webkit-scrollbar {
+    width: 10px;
+  }
+  
+::-webkit-scrollbar-track {
+background: #A3BCF9; 
+}
+
+::-webkit-scrollbar-thumb {
+background: #576490; 
+}
+
+/* Div del estado de cuenta */
+.div_status {
+    float: left;
+}
+
+/* Estado de cuenta */
 .label_titulo {
+    margin-right: 0.2em;
     font-size: 1.2em;
     font-weight: bold;
 }
 
-.label_normal {
-    margin-top: 1.8vh;
+.span_update {
+    position: relative;
+    top: 5px;
+    color: #576490;
+    cursor: pointer;
 }
 
+/* Botón new*/
 .btn-lg {
     width: 158.67px;
     border: none;
-    color: white;
     background-color: #576490;
+    color: white;
 }
 
 .btn-lg:hover {
-    color: white;
     background-color: #A3BCF9;
+    color: white;
 }
 
-.label_span_update {
-    position: relative;
-    top: 5px;
-    margin-left: 0.3em;
-    color: #576490;
-}
-
+/* Div secundario */
 .div_container2 {
-    /* display: none; */
     display: flex;
     flex-wrap: wrap;
-    margin-top: 2vh;
+    margin-top: 5vh;
     margin-left: 8vw;
-    margin-right: 20vw;
+    margin-right: 8vw;
 }
 
+.div_form_size {
+    height: 282.31px;
+    width: 784.92px;
+}
+
+form {
+    display: none;
+}
+
+/* Div del formulario */
 .div_form {
     position: relative;
     display: inline-block;
     margin-top: 3vh;
-    margin-right: 12em;
+    margin-right: 9.7em;
 }
 
+/* Formulario */
 .label_select {
     margin-right: 0.5em;
 }
 
 .select_moneda {
-    display: inline-block;
     width: 12em;
-}
-
-.select_moneda:active {
-    box-shadow: red;
+    display: inline-block;
 }
 
 .input_cantidad_from {
-    display: inline-block;
     width: 10.3em;
+    display: inline-block;
 }
 
 .span_calculate {
     position: absolute;
     display: inline-block;
     color: #576490;
+    cursor: pointer;
 }
 
-.input_cantidad_to {
-    display: inline-block;
+.label_cantidad_to {
     width: 9em;
-    border: none;
-    box-shadow: none;
-}
-
-.input_cantidad_to:focus {
-    border: none;
-    box-shadow: none;
-}
-
-.input_pu {
     display: inline-block;
-    width: 11.7em;
-}
-
-.input_pu:focus {
     border: none;
     box-shadow: none;
+    border-bottom: solid 1.7px #A3BCF9;
+}
+
+.div_space1 {
+    display: inline-block;
+    margin-right: 25.1em;
+}
+
+.label_pu {
+    width: 11.7em;
+    display: inline-block;
+    border-bottom: solid 1.7px #A3BCF9;
+}
+
+.div_space2 {
+    display: inline-block;
+    margin-right: 29.4em;
 }
 
 .btn-md {
     border: none;
-    color: white;
-    background-color: #576490;
     margin-bottom: 2em;
+    background-color: #576490;
+    color: white;
 }
 
 .btn-md:hover {
-    color: white;
     background-color: #A3BCF9;
 }
 
-.div_space1 {
+.div_alert {
+    height: 10em;
+    width: 25em;
     position: relative;
     display: inline-block;
-    margin-right: 27.4em;
+    margin-top: 3vh;
+    margin-left: 12vw;
 }
 
-.div_space2 {
-    position: relative;
-    display: inline-block;
-    margin-right: 31.7em;
-}
-
-button:active {
-    background-color: none;
-    color: none;
+.alert {
+    display: none;
 }

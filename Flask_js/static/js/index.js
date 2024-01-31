@@ -53,8 +53,7 @@ function get_records_handler() {
             // Guardamos el balance individual de cada crypto.
             get_crypto_balance(records);
         } else {
-            const error = JSON.parse(this.responseText);
-            alert(error.mensaje);
+            show_alert(3, "Ha ocurrido un error al cargar los registros.");
         }
     }
 }
@@ -86,15 +85,43 @@ function get_status_handler() {
             document.getElementById("label_purchase_value").innerText = values.valor_compra.toFixed(2) + " €";
             document.getElementById("label_current_value").innerText = values.valor_actual.toFixed(2) + " €";
         } else {
-            const error = JSON.parse(this.responseText);
-            alert(error.mensaje);
+            show_alert(3, "Ha ocurrido un error al cargar el estado de la cuenta.");
         }
     }
 }
 
-// Función que lanza la petición "GET" para conseguir la tasa de intercambio entre dos monedas.
+// Función que se lanza cuando actualizamos el estado de la cuenta.
+function get_status(event) {
+    event.preventDefault();
+    hide_alert();
+
+    request_get_status.open("GET", "http://127.0.0.1:5000/api/" + VERSION + "/status", true);
+    request_get_status.onload = get_status_handler;
+    request_get_status.onerror = function() {show_alert(3, "Ha ocurrido un error al cargar el estado de la cuenta.")};
+    request_get_status.send();
+}
+
+// Función que se lanza cuando queremos mostrar el formulario.
+function show_form(event) {
+    event.preventDefault();
+    hide_alert();
+
+    document.getElementById("form").style.display = "inline-block";
+}
+
+// Función que se lanza cuando hay que resetear el valor de "label_cantidad_to" y "label_pu".
+function reset_values(event) {
+    event.preventDefault();
+    hide_alert();
+
+    document.getElementById("label_cantidad_to").innerText = "";
+    document.getElementById("label_pu").innerText = "";
+}
+
+// Función que se lanza para conseguir la tasa de intercambio entre dos monedas.
 function get_rate(event) {
     event.preventDefault();
+    hide_alert();
 
     const moneda_from = document.getElementById("select_moneda_from").value;
     const cantidad_from = document.getElementById("input_cantidad_from").value;
@@ -109,7 +136,7 @@ function get_rate(event) {
     // Realizamos la petición "GET".
     request_get_rate.open("GET", "http://127.0.0.1:5000/api/" + VERSION + "/tasa/" + moneda_from + "/" + moneda_to, true);
     request_get_rate.onload = get_rate_handler;
-    request_get_rate.onerror = function() {alert("No se ha podido calcular la tasa de cambio.")};
+    request_get_rate.onerror = function() {show_alert(3, "Ha ocurrido un error al hacer la conversión.")};
     request_get_rate.send();
 }
 
@@ -126,24 +153,24 @@ function check_all(bool, moneda_from, cantidad_from) {
 function check_fields(bool) {
     const moneda_from = document.getElementById("select_moneda_from").value;
     if(moneda_from === "") {
-        alert("Debe seleccionar una moneda en \"From:\".");
+        show_alert(2, "Debe seleccionar una moneda en \"From:\".");
         return false;
     }
 
     const moneda_to = document.getElementById("select_moneda_to").value;
     if(moneda_to === "") {
-        alert("Debe seleccionar una moneda en \"To:\".");
+        show_alert(2, "Debe seleccionar una moneda en \"To:\".");
         return false;
     }
 
     if(moneda_from === moneda_to) {
-        alert("Las monedas \"From:\" y \"To:\" deben ser diferentes.");
+        show_alert(2, "Las monedas \"From:\" y \"To:\" deben ser diferentes.")
         return false;
     }
 
     const cantidad_from = document.getElementById("input_cantidad_from").value;
     if(cantidad_from === "" || cantidad_from <= 0) {
-        alert("Debe introducir una cantidad.");
+        show_alert(2, "Debe introducir una cantidad.");
         return false;
     }
 
@@ -152,7 +179,7 @@ function check_fields(bool) {
         const pu = document.getElementById("label_pu").innerText;
 
         if(cantidad_to === "" || pu === "") {
-            alert("Debe calcular el cambio de las monedas antes de realizar el registro.");
+            show_alert(2, "Debe calcular el cambio de las monedas antes de realizar el registro.");
             return false;
         }
     }
@@ -163,14 +190,14 @@ function check_fields(bool) {
 // Función que comprueba que hay balance suficiente de una moneda.
 function check_balance(moneda_from, cantidad_from) {
     if(cantidad_from > crypto_balance.get(moneda_from)) {
-        alert("No tiene " + moneda_from + " suficiente para realizar esta operación.");
+        show_alert(2, "No tiene " + moneda_from + " suficiente para realizar esta operación.");
         return false;
     }
 
     return true;
 }
 
-// Función que muestra el estado de la cuenta.
+// Función que muestra el cambio de una moneda a otra.
 function get_rate_handler() {
     if(this.readyState === 4) {
         if(this.status === 201) {
@@ -180,26 +207,35 @@ function get_rate_handler() {
             document.getElementById("label_cantidad_to").innerText = json_reponse["rate"] * document.getElementById("input_cantidad_from").value;
             document.getElementById("label_pu").innerText = json_reponse["rate"];
         } else {
-            const error = JSON.parse(this.responseText);
-            alert(error.mensaje);
+            show_alert(3, "Ha ocurrido un error al hacer la conversión.");
         }
     }
 }
 
-// Función que resetea el valor de "label_cantidad_to" y "label_pu".
-function reset_values() {
+// Función que se lanza cuando queremos cerrar el formulario.
+function close_form(event) {
+    event.preventDefault();
+    hide_alert();
+
+    document.getElementById("form").style.display = "none";
+
+    // Reseteamos los valores del formulario.
+    document.getElementById("select_moneda_from").value = -1;
+    document.getElementById("select_moneda_to").value = -1;
+    document.getElementById("input_cantidad_from").value = "";
     document.getElementById("label_cantidad_to").innerText = "";
-    document.getElementById("label_pu").innerText = "";
+    document.getElementById("label_pu").innerText = "";  
 }
 
-// Función que lanza la petición "POST" para insertar un registro.
+// Función que se lanza para insertar un registro.
 function post_record(event) {
     event.preventDefault();
+    hide_alert();
 
     const cantidad_from = document.getElementById("input_cantidad_from").value;
     const moneda_from = document.getElementById("select_moneda_from").value;
 
-    if(! check_all(false, moneda_from, cantidad_from)) {
+    if(! check_all(true, moneda_from, cantidad_from)) {
         return;
     }
 
@@ -223,7 +259,7 @@ function post_record(event) {
     // Realizamos la petición "POST".
     request_post_record.open("POST", "http://127.0.0.1:5000/api/" + VERSION + "/movimiento", true);
     request_post_record.onload = post_record_handler;
-    request_post_record.onerror = function() {alert("No se ha podido realizar el registro.")};
+    request_post_record.onerror = function() {show_alert(3, "Ha ocurrido un error al insertar el registro.")};
     // Establecemos los valores del encabezado de la solicitud HTTP.
     request_post_record.setRequestHeader("Content-Type","application/json");
     request_post_record.send(json_records);
@@ -234,14 +270,20 @@ function post_record_handler() {
     if(this.readyState === 4) {
         if(this.status === 201) {
             const json_response = JSON.parse(this.responseText);
-            alert("El registro se ha guardado correctamente. ID: " + json_response["id"]);
+            show_alert(1, "El registro se ha guardado correctamente. ID: " + json_response["id"]);
 
+            // Actualizo los registros de la tabla.
             request_get_records.open("GET", "http://127.0.0.1:5000/api/" + VERSION + "/movimientos", true);
             request_get_records.onload = get_records_handler;
-            request_get_records.onerror = function() {alert("No se han podido cargar los registros.")};
+            request_get_records.onerror = function() {show_alert(3, "No se han podido cargar los registros.")};
             request_get_records.send();
 
-            // Reseteamos los valores del formulario.
+            // Actualizo el estado de la cuenta.
+            // request_get_status.open("GET", "http://127.0.0.1:5000/api/" + VERSION + "/status", true);
+            // request_get_status.onload = get_status_handler;
+            // request_get_status.onerror = function() {alert("Ha ocurrido un error al cargar el estado de la cuenta.")};
+            // request_get_status.send();
+
             document.getElementById("select_moneda_from").value = -1;
             document.getElementById("select_moneda_to").value = -1;
             document.getElementById("input_cantidad_from").value = "";
@@ -249,12 +291,41 @@ function post_record_handler() {
             document.getElementById("label_pu").innerText = "";            
         } else if(this.status === 200) {
             const moneda_from = document.getElementById("select_moneda_from").value;
-            alert(alert("No tiene " + moneda_from + " suficiente para realizar esta operación."));
+            show_alert(2, "No tiene " + moneda_from + " suficiente para realizar esta operación.");
         } else {
-            const error = JSON.parse(this.responseText);
-            alert(error.mensaje);
+            show_alert(3, "Ha ocurrido un error al insertar el registro.");
         }
     }
+}
+
+// Función que muestra las alertas.
+function show_alert(num, message) {
+    if(num === 1) {
+        document.getElementById("alert_success").innerText = message;
+        document.getElementById("alert_success").style.display = "inline-block";
+        setTimeout(function() {
+            document.getElementById("alert_success").style.display = "none";
+        }, 3000)
+    } else if(num === 2) {
+        document.getElementById("alert_warning").innerText = message;
+        document.getElementById("alert_warning").style.display = "inline-block";
+        setTimeout(function() {
+            document.getElementById("alert_warning").style.display = "none";
+        }, 3000)
+    } else if(num === 3) {
+        document.getElementById("alert_danger").innerText = message;
+        document.getElementById("alert_danger").style.display = "inline-block";
+        setTimeout(function() {
+            document.getElementById("alert_danger").style.display = "none";
+        }, 3000)
+    }
+}
+
+// Función que esconde las alertas.
+function hide_alert() {
+        document.getElementById("alert_success").style.display = "none";
+        document.getElementById("alert_warning").style.display = "none";
+        document.getElementById("alert_danger").style.display = "none";
 }
 
 // En el "onload" están todos los métodos que se lanzan al abrir la página.
@@ -262,18 +333,22 @@ window.onload = function() {
     // Lanzamos la petición para obtener los registros.
     request_get_records.open("GET", "http://127.0.0.1:5000/api/" + VERSION + "/movimientos", true);
     request_get_records.onload = get_records_handler;
-    request_get_records.onerror = function() {alert("No se han podido cargar los registros.")};
+    request_get_records.onerror = function() {show_alert(3, "Ha ocurrido un error al cargar los registros.")};
     request_get_records.send();
 
     // Lanzamos la petición para obtener el estado de la cuenta.
-    request_get_status.open("GET", "http://127.0.0.1:5000/api/" + VERSION + "/status", true);
-    request_get_status.onload = get_status_handler;
-    request_get_status.onerror = function() {alert("No se ha podido cargar el estado de la cuenta.")};
-    request_get_status.send();
+    // request_get_status.open("GET", "http://127.0.0.1:5000/api/" + VERSION + "/status", true);
+    // request_get_status.onload = get_status_handler;
+    // request_get_status.onerror = function() {alert("Ha ocurrido un error al cargar el estado de la cuenta.")};
+    // request_get_status.send();
 
-    // Evento que se lanza cuando queremos saber el cambio de moneda_from a moneda_to.
-    let calculate = document.getElementById("btn_calcular");
-    calculate.addEventListener("click", get_rate);
+    // Evento que se lanza cuando queremos actualizar el estado de la cuenta.
+    let update = document.getElementById("span_update");
+    update.addEventListener("click", get_status);
+
+    // Evento que se lanza cuando queremos mostrar el formulario.
+    let open = document.getElementById("button_open");
+    open.addEventListener("click", show_form);
 
     // Eventos que se lanzan cuando se modifica el valor de moneda_from, moneda_to o cantidad_from.
     let select_moneda_from = document.getElementById("select_moneda_from");
@@ -285,7 +360,15 @@ window.onload = function() {
     let input_cantidad_from = document.getElementById("input_cantidad_from");
     input_cantidad_from.addEventListener("change", reset_values);
 
+    // Evento que se lanza cuando queremos saber el cambio de moneda_from a moneda_to.
+    let calculate = document.getElementById("span_calculate");
+    calculate.addEventListener("click", get_rate);
+
+    // Evento que se lanza cuando queremos cerrar el formulario.
+    let close = document.getElementById("button_close");
+    close.addEventListener("click", close_form);
+
     // Evento que se lanza cuando queremos guardar un registro.
-    let save = document.getElementById("btn_guardar");
+    let save = document.getElementById("button_save");
     save.addEventListener("click", post_record);
 }
