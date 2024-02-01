@@ -20,34 +20,54 @@ function get_records_handler() {
 
             // Añadimos los nuevos datos a la tabla.
             const table = document.getElementById("table_records");
-            for(let i=0; i<records.length-1; i++) {
+            if(records.length === 1) {
                 const row = document.createElement("tr");
-
-                const cell_date = document.createElement("td");
-                cell_date.innerHTML = records[i].date;
-                row.appendChild(cell_date);
-
-                const cell_time = document.createElement("td");
-                cell_time.innerHTML = records[i].time;
-                row.appendChild(cell_time);
-
-                const cell_moneda_from = document.createElement("td");
-                cell_moneda_from.innerHTML = records[i].moneda_from;
-                row.appendChild(cell_moneda_from);
-
-                const cell_cantidad_from = document.createElement("td");
-                cell_cantidad_from.innerHTML = records[i].cantidad_from;
-                row.appendChild(cell_cantidad_from);
-
-                const cell_moneda_to = document.createElement("td");
-                cell_moneda_to.innerHTML = records[i].moneda_to;
-                row.appendChild(cell_moneda_to);
-
-                const cell_cantidad_to = document.createElement("td");
-                cell_cantidad_to.innerHTML = records[i].cantidad_to;
-                row.appendChild(cell_cantidad_to);
+    
+                const cell_vacia = document.createElement("td");
+                cell_vacia.style.minWidth = "270px";
+                cell_vacia.style.fontWeight = "bold";
+                cell_vacia.innerText = "No hay registros en la base de datos.";
+                row.appendChild(cell_vacia);
 
                 table.appendChild(row);
+            } else {
+                for(let i=0; i<records.length-1; i++) {
+                    const row = document.createElement("tr");
+    
+                    const cell_date = document.createElement("td");
+                    cell_date.innerText = records[i].date;
+                    row.appendChild(cell_date);
+    
+                    const cell_time = document.createElement("td");
+                    cell_time.innerText = records[i].time;
+                    row.appendChild(cell_time);
+    
+                    const cell_moneda_from = document.createElement("td");
+                    cell_moneda_from.innerText = records[i].moneda_from;
+                    row.appendChild(cell_moneda_from);
+    
+                    const cell_cantidad_from = document.createElement("td");
+                    if(records[i].moneda_from === "EUR") {
+                        cell_cantidad_from.innerText = records[i].cantidad_from.toFixed(2);
+                    } else {
+                        cell_cantidad_from.innerText = records[i].cantidad_from.toFixed(8);
+                    }
+                    row.appendChild(cell_cantidad_from);
+    
+                    const cell_moneda_to = document.createElement("td");
+                    cell_moneda_to.innerText = records[i].moneda_to;
+                    row.appendChild(cell_moneda_to);
+    
+                    const cell_cantidad_to = document.createElement("td");
+                    if(records[i].cantidad_to === "EUR") {
+                        cell_cantidad_to.innerText = records[i].cantidad_to.toFixed(2);
+                    } else {
+                        cell_cantidad_to.innerText = records[i].cantidad_to.toFixed(8);
+                    }
+                    row.appendChild(cell_cantidad_to);
+    
+                    table.appendChild(row);
+                }
             }
             
             // Guardamos el balance individual de cada crypto.
@@ -80,13 +100,29 @@ function get_status_handler() {
             const values = json_values.data;
 
             // Modificamos el valor de las labels para mostrar los datos por pantalla.
+            status_label_color(values.invertido, "label_invested")
             document.getElementById("label_invested").innerText = values.invertido.toFixed(2) + " €";
+
+            status_label_color(values.recuperado, "label_recovered")
             document.getElementById("label_recovered").innerText = values.recuperado.toFixed(2) + " €";
+
+            status_label_color(values.valor_compra, "label_purchase_value")
             document.getElementById("label_purchase_value").innerText = values.valor_compra.toFixed(2) + " €";
+
+            status_label_color(values.valor_actual, "label_current_value")
             document.getElementById("label_current_value").innerText = values.valor_actual.toFixed(2) + " €";
         } else {
             show_alert(3, "Ha ocurrido un error al cargar el estado de la cuenta.");
         }
+    }
+}
+
+// Función que cambia el color de las labels de balance de cuenta.
+function status_label_color(valor, label) {
+    if(valor < 0) {
+        document.getElementById(label).style.color = "red";
+    } else {
+        document.getElementById(label).style.color = "black";
     }
 }
 

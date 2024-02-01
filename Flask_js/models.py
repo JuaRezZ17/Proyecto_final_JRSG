@@ -60,12 +60,12 @@ def get_status():
     values = {}
 
     conexion = Conexion("SELECT ifnull(sum(cantidad_from), 0) FROM movements WHERE moneda_from=\"EUR\";")
-    values["invertido"] = conexion.result.fetchall()[0][0];
+    values["invertido"] = conexion.result.fetchall()[0][0]
 
     conexion = Conexion("SELECT ifnull(sum(cantidad_to), 0) FROM movements WHERE moneda_to=\"EUR\";")
-    values["recuperado"] = conexion.result.fetchall()[0][0];
+    values["recuperado"] = conexion.result.fetchall()[0][0]
 
-    values["valor_compra"] = values["invertido"] - values["recuperado"];
+    values["valor_compra"] = values["invertido"] - values["recuperado"]
 
     # Comprobamos si hay registros de cada crypto para evitar hacer peticiones innecesarias a la API.
     cryptos_total_quantity = 0

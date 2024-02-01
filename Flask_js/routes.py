@@ -58,14 +58,7 @@ def movimiento():
     try:
         id = post_record([data['fecha'], data['hora'], data['from_moneda'], data['from_cantidad'], data['to_moneda'], data['to_cantidad']])
 
-        if id == -1:
-            return jsonify(
-                {
-                    "status": "fail",
-                    "mensaje": "Saldo insuficiente."
-                }
-            ), HTTPStatus.OK
-        else:
+        if id != -1:
             return jsonify(
                 {
                     "status": "success",
@@ -73,6 +66,13 @@ def movimiento():
                     "monedas": [data['from_moneda'], data['to_moneda']]
                 }
             ), HTTPStatus.CREATED
+        else:
+            return jsonify(
+                {
+                    "status": "fail",
+                    "mensaje": "Saldo insuficiente."
+                }
+            ), HTTPStatus.OK
     except sqlite3.Error:
         return jsonify(
             {
@@ -85,12 +85,12 @@ def movimiento():
 @app.route(f"/api/{VERSION}/status")
 def status():
     try:
-        var_status = get_status()
+        balance = get_status()
 
         return jsonify(
             {
                 "status": "success",
-                "data": var_status
+                "data": balance
             }
         ), HTTPStatus.OK
     except sqlite3.Error:

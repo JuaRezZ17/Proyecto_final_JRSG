@@ -50,26 +50,30 @@ a {
 
 /* index.html */
 /* Div principal */
-.div_container1 {
+.section_container1 {
     overflow: hidden;
     margin-top: 4vh;
     margin-left: 8vw;
-    margin-right: 8vw;
+    margin-right: 4vw;
 }
 
 /* Div de la tabla */
 .div_table {
     max-height: 385.5px;
+    max-width: 1243.09px;
     float: left;
+    margin-right: 8vw;
+    margin-bottom: 3vh;
 }
 
 /* Tabla */
 table {
     display: block;
-    height: 385.5px;
+    max-height: 385.5px;
+    max-width: 1243.09px;
     position: relative;
-    margin-right: 9.9em;
     overflow-y: auto;
+    overflow-x: hidden;
 }
 
 tr {
@@ -127,10 +131,10 @@ background: #576490;
 }
 
 /* Div secundario */
-.div_container2 {
+.section_container2 {
     display: flex;
     flex-wrap: wrap;
-    margin-top: 5vh;
+    margin-top: 2vh;
     margin-left: 8vw;
     margin-right: 8vw;
 }
