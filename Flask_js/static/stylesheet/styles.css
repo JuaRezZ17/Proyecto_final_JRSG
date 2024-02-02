@@ -1,7 +1,9 @@
 /* base.html */
 /* Body */
 body {
-    padding-bottom: 5vh;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
     font-family: 'Ubuntu', sans-serif;
     font-size: 1em;
     background-color: #D1D2F9;
@@ -9,39 +11,51 @@ body {
 
 /* Header */
 header {
-    height: 10vh;
-    position: relative;
-    top: 0vh;
+    height: 6em;
+    width: 100%;
+    top: 0;
     background-color: #A3BCF9;
 }
 
 header strong {
-    position: absolute;
-    top: 1.7vh;
+    position: relative;
+    top: 0.4em;
     left: 8vw;
-    font-size: 4vh;
+    font-size: 2.5em;
 }
 
-.alert {
-    position: absolute;
-    display: inline;
-    bottom: 0;
-} 
+menu {
+    position: relative;
+    float: right;
+    margin-top: 1.7em;
+    margin-right: 8vw;
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+menu a {
+    color: black;
+    margin-right: 2em;
+}
+
+menu li {
+    display: inline-block;
+}
 
 /* Footer */
 footer {
+    height: 3em;
     width: 100%;
-    height: 5vh;
-    position: fixed;
-    bottom: 0;
+    margin-top: auto;
     background-color: #A3BCF9;
 }
 
 footer strong {
     position: relative;
-    top: 1.1vh;
+    top: 0.6em;
     left: 8vw;
-    font-size: 2vh;
+    font-size: 1.2em;
+    white-space: nowrap;
 }
 
 a {
@@ -52,22 +66,22 @@ a {
 /* Div principal */
 .section_container1 {
     overflow: hidden;
-    margin-top: 4vh;
+    margin-top: 3em;
     margin-left: 8vw;
     margin-right: 4vw;
 }
 
 /* Div de la tabla */
-.div_table {
+.div_table_index {
     max-height: 385.5px;
     max-width: 1243.09px;
     float: left;
-    margin-right: 8vw;
+    margin-right: 8.5vw;
     margin-bottom: 3vh;
 }
 
 /* Tabla */
-table {
+.table_records {
     display: block;
     max-height: 385.5px;
     max-width: 1243.09px;
@@ -134,7 +148,6 @@ background: #576490;
 .section_container2 {
     display: flex;
     flex-wrap: wrap;
-    margin-top: 2vh;
     margin-left: 8vw;
     margin-right: 8vw;
 }
@@ -152,7 +165,7 @@ form {
 .div_form {
     position: relative;
     display: inline-block;
-    margin-top: 3vh;
+    margin-top: 4vh;
     margin-right: 9.7em;
 }
 
@@ -215,13 +228,39 @@ form {
 
 .div_alert {
     height: 10em;
-    width: 25em;
+    width: 35em;
     position: relative;
     display: inline-block;
-    margin-top: 3vh;
+    margin-top: 8vh;
     margin-left: 12vw;
 }
 
 .alert {
+    position: absolute;
     display: none;
+    margin-top: 4vh;
+}
+
+/* resument.html */
+.section_container3 {
+    overflow: hidden;
+    margin-top: 3em;
+}
+.table_resumen {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.table_resumen_td {
+    text-transform: uppercase;
+}
+
+.btn-sm {
+    border: none;
+    background-color: #576490;
+    color: white;
+}
+
+.btn-sm:hover {
+    background-color: #A3BCF9;
 }

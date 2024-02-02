@@ -1,4 +1,5 @@
 from Flask_js.conexion import Conexion
+from Flask_js.utils.utils import cryptos
 
 def crypto_quantity(crypto):
     query_results = []
@@ -9,3 +10,11 @@ def crypto_quantity(crypto):
     conexion.conexion.close()
 
     return query_results[0] - query_results[1]
+
+def all_cryptos_balance():
+    crypto_balance = {}
+
+    for crypto in cryptos:
+        crypto_balance[crypto] = crypto_quantity(crypto)
+
+    return crypto_balance

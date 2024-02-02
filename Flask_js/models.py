@@ -1,7 +1,7 @@
 from Flask_js.conexion import Conexion
 import requests
 from Flask_js.utils.utils import API, API_KEY, cryptos
-from Flask_js.utils.functions import crypto_quantity
+from Flask_js.utils.functions import crypto_quantity, all_cryptos_balance
 
 # Función para cargar los registros.
 def get_records():
@@ -24,9 +24,7 @@ def get_records():
     conexion.conexion.close()
 
     # Guardamos el balance de cada crypto en un diccionario.
-    crypto_balance = {}
-    for crypto in cryptos:
-        crypto_balance[crypto.lower()] = crypto_quantity(crypto)
+    crypto_balance = all_cryptos_balance()
         
     dictionary_list.append(crypto_balance)
 
