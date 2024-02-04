@@ -100,3 +100,11 @@ def status():
                 "mensaje": str(sqlite3.Error)
             }
         ), HTTPStatus.BAD_REQUEST
+    
+@app.route(f"/login")
+def login():
+    return render_template("login.html")
+
+@app.route(f"/register")
+def register():
+    return render_template("register.html")

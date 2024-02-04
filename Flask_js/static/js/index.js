@@ -19,7 +19,7 @@ function get_records_handler() {
             const records = json_records.data;
 
             // Añadimos los nuevos datos a la tabla.
-            const table = document.getElementById("table_records");
+            const table_records = document.getElementById("table_records");
             if(records.length === 1) {
                 const row = document.createElement("tr");
     
@@ -29,7 +29,7 @@ function get_records_handler() {
                 cell_vacia.innerText = "No hay registros en la base de datos.";
                 row.appendChild(cell_vacia);
 
-                table.appendChild(row);
+                table_records.appendChild(row);
             } else {
                 for(let i=0; i<records.length-1; i++) {
                     const row = document.createElement("tr");
@@ -48,9 +48,9 @@ function get_records_handler() {
     
                     const cell_cantidad_from = document.createElement("td");
                     if(records[i].moneda_from === "EUR") {
-                        cell_cantidad_from.innerText = records[i].cantidad_from.toFixed(2);
+                        cell_cantidad_from.innerText = Math.round(records[i].cantidad_from * 100) / 100;
                     } else {
-                        cell_cantidad_from.innerText = records[i].cantidad_from.toFixed(8);
+                        cell_cantidad_from.innerText = Math.round(records[i].cantidad_from * 100000000) / 100000000;
                     }
                     row.appendChild(cell_cantidad_from);
     
@@ -60,18 +60,36 @@ function get_records_handler() {
     
                     const cell_cantidad_to = document.createElement("td");
                     if(records[i].cantidad_to === "EUR") {
-                        cell_cantidad_to.innerText = records[i].cantidad_to.toFixed(2);
+                        cell_cantidad_to.innerText = Math.round(records[i].cantidad_to * 100) / 100;
                     } else {
-                        cell_cantidad_to.innerText = records[i].cantidad_to.toFixed(8);
+                        cell_cantidad_to.innerText = Math.round(records[i].cantidad_to * 100000000) / 100000000;
                     }
                     row.appendChild(cell_cantidad_to);
     
-                    table.appendChild(row);
+                    table_records.appendChild(row);
                 }
             }
             
             // Guardamos el balance individual de cada crypto.
             get_crypto_balance(records);
+            // TODO: Preguntar el martes
+
+            document.getElementById("table_cryptos").innerHTML = "<tr><th>Crypto</th><th>Cantidad</th></tr>";
+            const table_cryptos = document.getElementById("table_cryptos");
+
+            for(let item of crypto_balance) {
+                const row = document.createElement("tr");
+
+                const cell_crypto = document.createElement("td");
+                cell_crypto.innerText = item[0];
+                row.appendChild(cell_crypto);
+
+                const cell_cantidad = document.createElement("td");
+                cell_cantidad.innerText = Math.round(item[1] * 100000000) / 100000000;
+                row.appendChild(cell_cantidad);
+
+                table_cryptos.appendChild(row);
+            }
         } else {
             show_alert(3, "Ha ocurrido un error al cargar los registros.");
         }
@@ -89,7 +107,7 @@ function get_crypto_balance(records) {
     crypto_balance.set("ADA", records[records.length-1].ada);
     crypto_balance.set("SOL", records[records.length-1].sol);
     crypto_balance.set("DOT", records[records.length-1].dot);
-    crypto_balance.set("MATIC", records[registros.length-1].matic);
+    crypto_balance.set("MATIC", records[records.length-1].matic);
 }
 
 // Función que muestra el estado de la cuenta.
@@ -142,6 +160,7 @@ function show_form(event) {
     event.preventDefault();
     hide_alert();
 
+    document.getElementById("div_index_new").style.display = "none";
     document.getElementById("form").style.display = "inline-block";
 }
 
@@ -254,10 +273,11 @@ function close_form(event) {
     hide_alert();
 
     document.getElementById("form").style.display = "none";
+    document.getElementById("div_index_new").style.display = "inline-block";
 
     // Reseteamos los valores del formulario.
     document.getElementById("select_moneda_from").value = -1;
-    document.getElementById("select_moneda_to").value = -1;
+    document.getElementById("select_moneda_to").value = "-1";
     document.getElementById("input_cantidad_from").value = "";
     document.getElementById("label_cantidad_to").innerText = "";
     document.getElementById("label_pu").innerText = "";  

@@ -15,6 +15,6 @@ def all_cryptos_balance():
     crypto_balance = {}
 
     for crypto in cryptos:
-        crypto_balance[crypto] = crypto_quantity(crypto)
+        crypto_balance[crypto.lower()] = crypto_quantity(crypto)
 
     return crypto_balance

@@ -26,20 +26,18 @@ header strong {
 
 menu {
     position: relative;
+    display: flex;
     float: right;
     margin-top: 1.7em;
-    margin-right: 8vw;
+    margin-right: 5vw;
+    list-style: none;
     font-size: 1.2em;
     font-weight: bold;
 }
 
-menu a {
-    color: black;
-    margin-right: 2em;
-}
-
 menu li {
-    display: inline-block;
+    margin-right: 3vw;
+    cursor: pointer;
 }
 
 /* Footer */
@@ -76,8 +74,7 @@ a {
     max-height: 385.5px;
     max-width: 1243.09px;
     float: left;
-    margin-right: 8.5vw;
-    margin-bottom: 3vh;
+    margin-bottom: 35px;
 }
 
 /* Tabla */
@@ -95,7 +92,7 @@ tr {
     border-bottom: solid 1.7px #A3BCF9;
 }
 
-th {
+table.table_records th {
     padding-right: 8vw;
     font-size: 1.2em;
 }
@@ -115,9 +112,11 @@ background: #576490;
 /* Div del estado de cuenta */
 .div_status {
     float: left;
+    margin-top: 3px;
+    margin-left: 8.5vw;
 }
 
-/* Estado de cuenta */
+/* Balance de cuenta */
 .label_titulo {
     margin-right: 0.2em;
     font-size: 1.2em;
@@ -131,9 +130,45 @@ background: #576490;
     cursor: pointer;
 }
 
+/* Balance crypto */
+#div_balance {
+    display: none;
+}
+
+#div_resumen {
+    display: none;
+}
+
+.table_cryptos {
+    margin-top: 4px;
+}
+
+table.table_cryptos th {
+    padding-right: 4vw;
+}
+
+/* Botones balance y resumen */
+.tab {
+    margin-top: 25px;
+}
+
+.tab button {
+    background-color: #576490;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 7px 7px;
+    color: white;
+}
+
+.tab button:hover {
+    background-color: #A3BCF9;
+}
+
 /* Botón new*/
 .btn-lg {
-    width: 158.67px;
+    width: 65vw;
     border: none;
     background-color: #576490;
     color: white;
@@ -141,7 +176,6 @@ background: #576490;
 
 .btn-lg:hover {
     background-color: #A3BCF9;
-    color: white;
 }
 
 /* Div secundario */
@@ -165,7 +199,7 @@ form {
 .div_form {
     position: relative;
     display: inline-block;
-    margin-top: 4vh;
+    margin-top: 3.5vh;
     margin-right: 9.7em;
 }
 
@@ -263,4 +297,69 @@ form {
 
 .btn-sm:hover {
     background-color: #A3BCF9;
+}
+
+/* login.html */
+.div_login {
+    text-align: center;
+}
+
+h3 {
+    font-weight: bold;
+}
+
+.div_login_parts {
+    margin-top: 3vh;
+}
+
+.label_error {
+    position: relative;
+    display: none;
+    left: 1em;
+    font-size: 0.8em;
+    color: red;
+}
+
+.login_error_email {
+    margin-right: 1em;
+}
+
+.login_error_password {
+    margin-left: 1.4em;
+}
+
+.btn_login {
+    margin-top: 0px;
+}
+
+.input_login {
+    width: 15em;
+    display: inline-block;
+}
+
+.div_login_barra {
+    margin-top: 2vh;
+    color: #A3BCF9;
+    font-weight: bold;
+}
+
+.div_login_register {
+    margin-top: 4vh;
+    margin-left: 0.1em;
+    margin-bottom: 3em;
+}
+
+/* register.html */
+.input_login_small {
+    width: 10em;
+    display: inline-block;
+}
+
+.input_login_big {
+    width: 20.2em;
+    display: inline-block;
+}
+
+.register_error_password {
+    margin-right: 13.5em;
 }
