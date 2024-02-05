@@ -14,8 +14,8 @@
         <header>
             <strong>KeepCoin</strong>
             <menu>
-                <li>Balance</li>
-                <li>Resumen</li>
+                <li id="menu_li_balance">Balance</li>
+                <li id="menu_li_resumen">Resumen</li>
             </menu>
         </header>
         <main>
@@ -34,14 +34,14 @@
                 </div>
                 <div class="div_status">
                     <div id="div_balance">
-                        <label class="label_titulo">Balance de cuenta</label>
+                        <label id="label_balance" class="label_titulo">Balance de cuenta</label>
                         <span id="span_update" class="material-icons span_update">update</span>
                         <br>
                         <div style="margin-top: 9px;">
                             <label><strong>Invertido:</strong></label>
                             <label id="label_invested"></label>
                         </div>
-                        <div style="margin-top: 12px;">
+                        <div style="margin-top: 11px;">
                             <label><strong>Recuperado:</strong></label>
                             <label id="label_recovered"></label>
                         </div>
@@ -55,7 +55,7 @@
                         </div>
                     </div>
                     <div id="div_resumen">
-                        <label class="label_titulo">Resumen de cryptos</label>
+                        <label id="label_resumen" class="label_titulo">Cantidad de cryptos</label>
                         <table id="table_cryptos" class="table_cryptos">
                             <tr>
                                 <th>Crypto</th>
@@ -130,9 +130,9 @@
                     </form>
                 </div>
                 <div class="div_alert">
-                    <div id="alert_success" class="alert alert-success" role="alert"></div>
-                    <div id="alert_warning" class="alert alert-warning" role="alert"></div>
-                    <div id="alert_danger" class="alert alert-danger" role="alert"></div>
+                    <div id="alert_success" class="alert alert-success alert_index" role="alert"></div>
+                    <div id="alert_warning" class="alert alert-warning alert_index" role="alert"></div>
+                    <div id="alert_danger" class="alert alert-danger alert_index" role="alert"></div>
                 </div>
             </section>
         </main>

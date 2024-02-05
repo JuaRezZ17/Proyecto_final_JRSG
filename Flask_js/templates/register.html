@@ -8,7 +8,7 @@
         <link rel="stylesheet" href="../static/stylesheet/styles.css">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu&display=swap">
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-        <script src="../static/js/index.js"></script>
+        <script src="../static/js/register.js"></script>
     </head>
     <body>
         <header>
@@ -18,23 +18,26 @@
             <section class="section_container1">
                 <div class="div_login">
                     <h3>Registro</h3>
-                    <div class="div_login_parts">
-                        <input id="input_register_name" placeholder="Nombre" type="text" class="form-control input_login_small">
-                        <input id="input_register_surname" placeholder="Apellido" type="text" class="form-control input_login_small">
+                    <div class="div_login_parts" style="min-width: 324.42px;">
+                        <input id="input_name" placeholder="Nombre" type="text" class="form-control input_login_small">
+                        <input id="input_surname" placeholder="Apellidos" type="text" class="form-control input_login_small">
                     </div>
                     <div class="div_login_parts">
-                        <input id="input_register_correo" placeholder="Correo electrónico" type="email" class="form-control input_login_big">
+                        <input id="input_email" placeholder="Correo electrónico" type="email" class="form-control input_login_big">
                     </div>
                     <div class="div_login_parts">
-                        <input id="input_register_contraseña" placeholder="Contraseña" type="password" class="form-control input_login_big">
+                        <input id="input_password_1" placeholder="Contraseña" type="password" class="form-control input_login_big">
                     </div>
                     <div class="div_login_parts">
-                        <input id="input_register_contraseña_repetida" placeholder="Repita la contraseña" type="password" class="form-control input_login_big">
-                        <br>
-                        <label id="label_register_error" class="label_error register_error_password"><strong>Las contraseñas no coinciden.</strong></label>
+                        <input id="input_password_2" placeholder="Repita la contraseña" type="password" class="form-control input_login_big">
                     </div>
                     <div class="div_login_register">
-                        <button id="button_register_register" class="btn btn-lg btn_login">Registrar</button>
+                        <button id="button_register" class="btn btn-lg btn_register">Registrar</button>
+                    </div>
+                    <div id="div_alert_register" class="div_alert_register">
+                        <div id="alert_success" class="alert alert-success alert_register" role="alert"></div>
+                        <div id="alert_warning" class="alert alert-warning alert_register" role="alert"></div>
+                        <div id="alert_danger" class="alert alert-danger alert_register" role="alert"></div>
                     </div>
                 </div>
             </section>

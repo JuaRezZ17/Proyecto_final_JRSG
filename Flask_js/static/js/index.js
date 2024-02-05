@@ -144,6 +144,32 @@ function status_label_color(valor, label) {
     }
 }
 
+// Función que se lanza cuando se hace click en la opción "Balance" del menú.
+function show_balance(event) {
+    event.preventDefault();
+
+    document.getElementById("menu_li_balance").style.cursor = "default";
+    document.getElementById("menu_li_balance").style.pointerEvents = "none";
+    document.getElementById("menu_li_resumen").style.cursor = "pointer";
+    document.getElementById("menu_li_resumen").style.pointerEvents = "all";
+
+    document.getElementById("div_resumen").style.display = "none";
+    document.getElementById("div_balance").style.display = "block";
+}
+
+// Función que se lanza cuando se hace click en la opción "Resumen" del menú.
+function show_resumen(event) {
+    event.preventDefault();
+
+    document.getElementById("menu_li_resumen").style.cursor = "default";
+    document.getElementById("menu_li_resumen").style.pointerEvents = "none";
+    document.getElementById("menu_li_balance").style.cursor = "pointer";
+    document.getElementById("menu_li_balance").style.pointerEvents = "all";
+
+    document.getElementById("div_balance").style.display = "none";
+    document.getElementById("div_resumen").style.display = "block";
+}
+
 // Función que se lanza cuando actualizamos el estado de la cuenta.
 function get_status(event) {
     event.preventDefault();
@@ -397,6 +423,14 @@ window.onload = function() {
     // request_get_status.onload = get_status_handler;
     // request_get_status.onerror = function() {alert("Ha ocurrido un error al cargar el estado de la cuenta.")};
     // request_get_status.send();
+
+    // Evento que se lanza cuando se pulsa el botón balance del menú.
+    let balance = document.getElementById("menu_li_balance");
+    balance.addEventListener("click", show_balance);
+
+    // Evento que se lanza cuando se pulsa el botón resumen del menú.
+    let resumen = document.getElementById("menu_li_resumen");
+    resumen.addEventListener("click", show_resumen);
 
     // Evento que se lanza cuando queremos actualizar el estado de la cuenta.
     let update = document.getElementById("span_update");

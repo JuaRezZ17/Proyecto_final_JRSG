@@ -12,7 +12,7 @@ def index():
 
 # Ruta para cargar registros de la base de datos.
 @app.route(f"/api/{VERSION}/movimientos")
-def movimientos():
+def route_movimientos():
     try:
         records = get_records()
         return jsonify(
@@ -31,7 +31,7 @@ def movimientos():
     
 # Ruta para calcular la tasa de moneda_from a moneda_to.
 @app.route(f"/api/{VERSION}/tasa/<string:moneda_from>/<string:moneda_to>")
-def tasa(moneda_from, moneda_to):
+def route_tasa(moneda_from, moneda_to):
     rate = get_rate(moneda_from, moneda_to)
 
     if rate != "":
@@ -52,7 +52,7 @@ def tasa(moneda_from, moneda_to):
 
 # Ruta para insertar un registro.
 @app.route(f"/api/{VERSION}/movimiento", methods=["POST"])
-def movimiento():
+def route_movimiento():
     data = request.json
 
     try:
@@ -83,7 +83,7 @@ def movimiento():
 
 # Ruta para cargar el balance de la cartera.
 @app.route(f"/api/{VERSION}/status")
-def status():
+def route_status():
     try:
         balance = get_status()
 
@@ -100,11 +100,50 @@ def status():
                 "mensaje": str(sqlite3.Error)
             }
         ), HTTPStatus.BAD_REQUEST
-    
+
 @app.route(f"/login")
-def login():
+def route_login():
     return render_template("login.html")
 
 @app.route(f"/register")
-def register():
+def route_register():
     return render_template("register.html")
+
+@app.route(f"/api/{VERSION}/users")
+def route_users():
+    try:
+        users = get_users()
+        return jsonify(
+            {
+                "status": "success",
+                "users": users
+            }
+        ), HTTPStatus.OK
+    except sqlite3.Error:
+        return jsonify(
+            {
+                "status": "fail",
+                "mensaje": str(sqlite3.Error)
+            }
+        ), HTTPStatus.BAD_REQUEST
+    
+@app.route(f"/api/{VERSION}/user", methods=["POST"])
+def route_user():
+    data = request.json
+
+    try:
+        id = post_user([data['email'], data['password'], data['name'], data['surname']])
+
+        return jsonify(
+            {
+                "status": "success",
+                "id": id,
+            }
+        ), HTTPStatus.CREATED
+    except sqlite3.Error:
+        return jsonify(
+            {
+                "status": "fail",
+                "mensaje": str(sqlite3.Error)
+            }
+        ), HTTPStatus.BAD_REQUEST

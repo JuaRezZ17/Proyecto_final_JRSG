@@ -81,3 +81,23 @@ def get_status():
     values["valor_actual"] = cryptos_total_quantity
 
     return values
+
+# Función que comprueba si un usuario existe.
+def get_users():
+    conexion = Conexion("SELECT email, password FROM users;")
+
+    users = []
+    for email in conexion.result.fetchall():
+        users.append(email)
+        
+    return users
+
+# Función para insertar un usuario.
+def post_user(user):
+    conexion = Conexion("INSERT INTO users(email, password, name, surname) VALUES(?, ?, ?, ?);", user)
+    conexion.conexion.commit()
+    # Guardamos el "id" del último registro.
+    id = conexion.cursor.lastrowid
+    conexion.conexion.close()
+    
+    return id

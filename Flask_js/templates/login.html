@@ -8,7 +8,7 @@
         <link rel="stylesheet" href="../static/stylesheet/styles.css">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu&display=swap">
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-        <script src="../static/js/index.js"></script>
+        <script src="../static/js/login.js"></script>
     </head>
     <body>
         <header>
@@ -20,13 +20,9 @@
                     <h3>Login</h3>
                     <div class="div_login_parts">
                         <input id="input_login_email" placeholder="Correo electrónico" type="email" class="form-control input_login">
-                        <br>
-                        <label id="label_email_error" class="label_error login_error_email"><strong>El e-mail que ha introducido no es correcto.</strong></label>
                     </div>
                     <div class="div_login_parts">
                         <input id="input_login_password" placeholder="Contraseña" type="password" class="form-control input_login">
-                        <br>
-                        <label id="label_password_error" class="label_error login_error_password"><strong>La contraseña que ha introducido no es correcta.</strong></label>
                     </div>
                     <div class="div_login_parts">
                         <button id="button_login" class="btn btn-lg btn_login">Entrar</button>
@@ -35,7 +31,12 @@
                         <label>__________________________________________________</label>
                     </div>
                     <div class="div_login_register">
-                        <button id="button_login_register" class="btn btn-lg btn_login">Crear cuenta</button>
+                        <button id="button_register" class="btn btn-lg btn_login">Crear cuenta</button>
+                    </div>
+                    <div id="div_alert_register" class="div_alert_register">
+                        <div id="alert_success" class="alert alert-success alert_register" role="alert"></div>
+                        <div id="alert_warning" class="alert alert-warning alert_register" role="alert"></div>
+                        <div id="alert_danger" class="alert alert-danger alert_register" role="alert"></div>
                     </div>
                 </div>
             </section>

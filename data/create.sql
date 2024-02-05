@@ -8,3 +8,12 @@ CREATE TABLE "movements" (
 	"cantidad_to"	REAL NOT NULL,
 	PRIMARY KEY("id" AUTOINCREMENT)
 );
+
+CREATE TABLE "users" (
+	"id"	INTEGER NOT NULL UNIQUE,
+	"email"	TEXT NOT NULL UNIQUE,
+	"password"	TEXT NOT NULL,
+	"name"	TEXT NOT NULL,
+	"surname"	TEXT NOT NULL,
+	PRIMARY KEY("id" AUTOINCREMENT)
+);
