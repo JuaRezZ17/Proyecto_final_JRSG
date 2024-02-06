@@ -39,7 +39,10 @@ function post_user_handler() {
             const json_response = JSON.parse(this.responseText);
             show_alert(1, "El usuario se ha creado correctamente. ID: " + json_response["id"]);
 
-            document.location.href = "http://127.0.0.1:5000/login";
+            request_get_emails.open("GET", "http://127.0.0.1:5000/login", true);
+            request_get_emails.onload = function() {};
+            request_get_emails.onerror = function() {};
+            request_get_emails.send();
         } else {
             show_alert(3, "Ha ocurrido un error al crear el usuario.");
         }
@@ -109,7 +112,7 @@ window.onload = function() {
                 const array_users = json_users.users;
 
                 for(let i=0; i<array_users.length; i++) {
-                    users[i] = array_users[i][0];
+                    users[i] = array_users[i][1];
                 }
             }
         }

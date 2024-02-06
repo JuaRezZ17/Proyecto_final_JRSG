@@ -1,14 +1,70 @@
 from Flask_js import app
-from flask import render_template, jsonify, request
+from flask import render_template, jsonify, request, redirect
 from Flask_js.utils.utils import VERSION
 from Flask_js.models import *
 import sqlite3
 from http import HTTPStatus
 
-# Ruta para cargar la página principal.
+# Ruta principal de flask que redirecciona a login.html.
 @app.route("/")
 def index():
-    return render_template("index.html")
+    return redirect("http://127.0.0.1:5000/login")
+
+# Ruta para abrir login.html.
+@app.route("/login")
+def route_login():
+    return render_template("login.html")
+
+# Ruta que cargar los correos y contraseñas de todos los usuarios.
+@app.route(f"/api/{VERSION}/users")
+def route_users():
+    try:
+        users = get_users()
+        return jsonify(
+            {
+                "status": "success",
+                "users": users
+            }
+        ), HTTPStatus.OK
+    except sqlite3.Error:
+        return jsonify(
+            {
+                "status": "fail",
+                "mensaje": str(sqlite3.Error)
+            }
+        ), HTTPStatus.BAD_REQUEST
+    
+# Ruta para abrir login.html.
+@app.route("/main/<int:id>")
+def route_main(id):
+    return render_template("main.html", id = id)
+    
+# Ruta para abrir register.html.
+@app.route("/register")
+def route_register():
+    return render_template("register.html")
+
+# Ruta para guardar un usuario.
+@app.route(f"/api/{VERSION}/user", methods=["POST"])
+def route_user():
+    data = request.json
+
+    try:
+        id = post_user([data['email'], data['password'], data['name'], data['surname']])
+
+        return jsonify(
+            {
+                "status": "success",
+                "id": id,
+            }
+        ), HTTPStatus.CREATED
+    except sqlite3.Error:
+        return jsonify(
+            {
+                "status": "fail",
+                "mensaje": str(sqlite3.Error)
+            }
+        ), HTTPStatus.BAD_REQUEST
 
 # Ruta para cargar registros de la base de datos.
 @app.route(f"/api/{VERSION}/movimientos")
@@ -93,53 +149,6 @@ def route_status():
                 "data": balance
             }
         ), HTTPStatus.OK
-    except sqlite3.Error:
-        return jsonify(
-            {
-                "status": "fail",
-                "mensaje": str(sqlite3.Error)
-            }
-        ), HTTPStatus.BAD_REQUEST
-
-@app.route(f"/login")
-def route_login():
-    return render_template("login.html")
-
-@app.route(f"/register")
-def route_register():
-    return render_template("register.html")
-
-@app.route(f"/api/{VERSION}/users")
-def route_users():
-    try:
-        users = get_users()
-        return jsonify(
-            {
-                "status": "success",
-                "users": users
-            }
-        ), HTTPStatus.OK
-    except sqlite3.Error:
-        return jsonify(
-            {
-                "status": "fail",
-                "mensaje": str(sqlite3.Error)
-            }
-        ), HTTPStatus.BAD_REQUEST
-    
-@app.route(f"/api/{VERSION}/user", methods=["POST"])
-def route_user():
-    data = request.json
-
-    try:
-        id = post_user([data['email'], data['password'], data['name'], data['surname']])
-
-        return jsonify(
-            {
-                "status": "success",
-                "id": id,
-            }
-        ), HTTPStatus.CREATED
     except sqlite3.Error:
         return jsonify(
             {

@@ -4,6 +4,7 @@ const crypto_balance = new Map();
 let request_get_status = new XMLHttpRequest();
 let request_get_rate = new XMLHttpRequest();
 let request_post_record = new XMLHttpRequest();
+let id = 0;
 
 // Función que muestra los registros de la base de datos en la tabla.
 function get_records_handler() {
@@ -412,6 +413,10 @@ function hide_alert() {
 
 // En el "onload" están todos los métodos que se lanzan al abrir la página.
 window.onload = function() {
+    let current_url = window.location.href;
+    let last_bar =  current_url.lastIndexOf("/");
+    id = current_url.substring(last_bar+1, current_url.length);
+
     // Lanzamos la petición para obtener los registros.
     request_get_records.open("GET", "http://127.0.0.1:5000/api/" + VERSION + "/movimientos", true);
     request_get_records.onload = get_records_handler;

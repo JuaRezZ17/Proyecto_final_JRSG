@@ -1,73 +1,57 @@
-const VERSION = "v1"
+const VERSION = "v1";
+const first_login = false;
 let request_get_users = new XMLHttpRequest();
 const users = [];
+let request_go_to_main = new XMLHttpRequest();
 
 function log_in(event) {
     event.preventDefault();
 
-    if(! check_fields()) {
-        return;
-    }
+    const check_fields_result = check_fields()
 
-    document.location.href = "http://127.0.0.1:5000/index/hola";
+    if(check_fields_result === "email") {
+        show_alert("No existe ningún usuario con ese correo.");
+        return;
+    } else if(check_fields_result === "password") {
+        show_alert("La contraseña no es correcta.");
+        return;
+    } else {
+        window.location.href = "http://127.0.0.1:5000/main/" + check_fields_result;
+    }
 }
 
 // Función que comprueba que los campos contienen un dato válido.
 function check_fields() {
-    // Comprobar que los campos no estan vacíos.
-    const name = document.getElementById("input_name").value;
-    const surname = document.getElementById("input_surname").value;
-    const email = document.getElementById("input_email").value;
-    const passwd1 = document.getElementById("input_password_1").value;
-    const passwd2 = document.getElementById("input_password_2").value;
-    if(name === "" || surname === "" || email === "" || passwd1 === "" || passwd2 === "") {
-        show_alert(2, "Debe rellenar todos los campos.");
-        return false;
-    }
+    const user = document.getElementById("input_login_email").value;
+    const password = document.getElementById("input_login_password").value;
 
-    // Comprobar que no existe un usuario creado con ese email.
+    // Comprobar que existe un usuario con ese correo.
     for(let i=0; i<users.length; i++) {
-        if(email === users[i]) {
-            show_alert(2, "Ya existe un usuario con este correo.");
-            return false;
+        if(user === users[i][1]) {
+            if(password === users[i][2]) {
+                return users[i][0];
+            } else {
+                return "password";
+            }
         }
     }
 
-    // Comprobar que las contraseñas no son iguales.
-    if(passwd1 != passwd2) {
-        show_alert(2, "Las contraseñas no coinciden.");
-        return false;
-    }
-
-    return true;
+    return "email";
 }
 
 function create_user(event) {
     event.preventDefault();
-    document.location.href = "http://127.0.0.1:5000/register/";
+
+    document.location.href = "http://127.0.0.1:5000/register";
 }
 
 // Función que muestra las alertas.
-function show_alert(num, message) {
-    if(num === 1) {
-        document.getElementById("alert_success").innerText = message;
-        document.getElementById("alert_success").style.display = "inline-block";
-        setTimeout(function() {
-            document.getElementById("alert_success").style.display = "none";
-        }, 3000)
-    } else if(num === 2) {
-        document.getElementById("alert_warning").innerText = message;
-        document.getElementById("alert_warning").style.display = "inline-block";
-        setTimeout(function() {
-            document.getElementById("alert_warning").style.display = "none";
-        }, 3000)
-    } else if(num === 3) {
-        document.getElementById("alert_danger").innerText = message;
-        document.getElementById("alert_danger").style.display = "inline-block";
-        setTimeout(function() {
-            document.getElementById("alert_danger").style.display = "none";
-        }, 3000)
-    }
+function show_alert(message) {
+    document.getElementById("alert_warning").innerText = message;
+    document.getElementById("alert_warning").style.display = "inline-block";
+    setTimeout(function() {
+        document.getElementById("alert_warning").style.display = "none";
+    }, 3000)
 }
 
 // En el "onload" están todos los métodos que se lanzan al abrir la página.
@@ -85,10 +69,10 @@ window.onload = function() {
             }
         }
     };
-    request_get_users.onerror = function() {show_alert(3, "No se ha podido comprobar si el email ya esxiste.")};
+    request_get_users.onerror = function() {};
     request_get_users.send();
 
-    let login = document.getElementById("button_register");
+    let login = document.getElementById("button_login");
     login.addEventListener("click", log_in);
 
     let create = document.getElementById("button_register");

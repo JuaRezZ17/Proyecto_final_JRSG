@@ -84,7 +84,7 @@ def get_status():
 
 # Función que comprueba si un usuario existe.
 def get_users():
-    conexion = Conexion("SELECT email, password FROM users;")
+    conexion = Conexion("SELECT id, email, password FROM users;")
 
     users = []
     for email in conexion.result.fetchall():
