@@ -1,0 +1,124 @@
+/* Body */
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 1em;
+    background-color: #D1D2F9;
+}
+
+/* Header */
+header {
+    display: flex;
+    height: 6em;
+    width: 100%;
+    top: 0;
+    background-color: #A3BCF9;
+}
+
+header strong {
+    position: relative;
+    top: 0.4em;
+    left: 8vw;
+    margin-right: 2em;
+    font-size: 2.5em;
+}
+
+menu {
+    display: flex;
+    float: right;
+    margin-top: 1.7em;
+    margin-left: auto;
+    margin-right: 8vw;
+    list-style: none;
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+menu li {
+    margin-right: 2vw;
+    cursor: pointer;
+}
+
+#li_balance {
+    cursor: default;
+    pointer-events: none;
+}
+
+/* Main */
+/* login.html */
+.section_1 {
+    overflow: hidden;
+    margin-top: 3em;
+    margin-left: 8vw;
+    margin-right: 8vw;
+}
+
+.div_centered {
+    text-align: center;
+}
+
+h3 {
+    font-weight: bold;
+}
+
+.input_standart {
+    width: 17em;
+    display: inline-block;
+    margin-top: 3vh;
+}
+
+.btn {
+    border: none;
+    color: white;
+    background-color: #576490;
+}
+
+.btn:hover {
+    color: black;
+    background-color: #A3BCF9;
+}
+
+.alert_standart {
+    text-align: center;
+    display: none;
+}
+
+/* register.html */
+.input_small {
+    width: 10em;
+    display: inline-block;
+    margin-top: 3vh;
+}
+
+.input_big {
+    width: 20.2em;
+    display: inline-block;
+    margin-top: 3vh;
+}
+
+span {
+    color: #576490;
+    cursor: pointer;
+}
+
+/* Footer */
+footer {
+    height: 3em;
+    width: 100%;
+    margin-top: auto;
+    background-color: #A3BCF9;
+}
+
+footer strong {
+    position: relative;
+    top: 0.55em;
+    left: 8vw;
+    font-size: 1.2em;
+    white-space: nowrap;
+}
+
+a {
+    color: #576490;
+}

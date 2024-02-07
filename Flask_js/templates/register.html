@@ -5,9 +5,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>KeepCoin</title>
         <link rel="stylesheet "href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-        <link rel="stylesheet" href="../static/stylesheet/styles.css">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu&display=swap">
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+        <link rel="stylesheet" href="../static/stylesheet/base.css">
+        <link rel="stylesheet" href="../static/stylesheet/register.css">
         <script src="../static/js/register.js"></script>
     </head>
     <body>
@@ -15,30 +16,28 @@
             <strong>KeepCoin</strong>
         </header>
         <main>
-            <section class="section_container1">
-                <div class="div_login">
+            <section class="section_1">
+                <div class="div_centered">
                     <h3>Registro</h3>
-                    <div class="div_login_parts" style="min-width: 324.42px;">
-                        <input id="input_name" placeholder="Nombre" type="text" class="form-control input_login_small">
-                        <input id="input_surname" placeholder="Apellidos" type="text" class="form-control input_login_small">
-                    </div>
-                    <div class="div_login_parts">
-                        <input id="input_email" placeholder="Correo electrónico" type="email" class="form-control input_login_big">
-                    </div>
-                    <div class="div_login_parts">
-                        <input id="input_password_1" placeholder="Contraseña" type="password" class="form-control input_login_big">
-                    </div>
-                    <div class="div_login_parts">
-                        <input id="input_password_2" placeholder="Repita la contraseña" type="password" class="form-control input_login_big">
-                    </div>
-                    <div class="div_login_register">
-                        <button id="button_register" class="btn btn-lg btn_register">Registrar</button>
-                    </div>
-                    <div id="div_alert_register" class="div_alert_register">
-                        <div id="alert_success" class="alert alert-success alert_register" role="alert"></div>
-                        <div id="alert_warning" class="alert alert-warning alert_register" role="alert"></div>
-                        <div id="alert_danger" class="alert alert-danger alert_register" role="alert"></div>
-                    </div>
+                    <input id="input_name" class="form-control input_small" placeholder="Nombre" type="text">
+                    <input id="input_surname" class="form-control input_small" placeholder="Apellidos" type="text">
+                    <br>
+                    <input id="input_address" class="form-control input_big" placeholder="Dirección" type="text">
+                    <br>
+                    <input id="input_phone" class="form-control input_small" placeholder="Teléfono" type="number">
+                    <input id="input_birthday" class="form-control input_small" style="color: #6c757d;" type="date">
+                    <br>
+                    <input id="input_email" class="form-control input_big" placeholder="Correo electrónico" type="email">
+                    <br>
+                    <input id="input_password_1" class="form-control input_big" placeholder="Contraseña" type="password">
+                    <br>
+                    <input id="input_password_2" class="form-control input_big" placeholder="Repita la contraseña" type="password">
+                    <br>
+                    <button id="button_register" class="btn btn-lg button_register">Registrar</button>
+                    <br>
+                    <div id="alert_success" class="alert alert-success alert_standart" role="alert"></div>
+                    <div id="alert_warning" class="alert alert-warning alert_standart" role="alert"></div>
+                    <div id="alert_danger" class="alert alert-danger alert_standart" role="alert"></div>
                 </div>
             </section>
         </main>

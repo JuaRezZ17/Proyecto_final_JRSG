@@ -1,21 +1,21 @@
 from Flask_js import app
-from flask import render_template, jsonify, request, redirect
+from flask import redirect, render_template, jsonify, request
 from Flask_js.utils.utils import VERSION
 from Flask_js.models import *
 import sqlite3
 from http import HTTPStatus
 
-# Ruta principal de flask que redirecciona a login.html.
+# Ruta por defecto donde abre flask. Redirecciona a login.html.
 @app.route("/")
-def index():
-    return redirect("http://127.0.0.1:5000/login")
+def route_index():
+    return redirect("/login")
 
-# Ruta para abrir login.html.
+# Ruta para abrir "login.html".
 @app.route("/login")
 def route_login():
     return render_template("login.html")
 
-# Ruta que cargar los correos y contraseñas de todos los usuarios.
+# Ruta que cargar los datos de todos los usuarios.
 @app.route(f"/api/{VERSION}/users")
 def route_users():
     try:
@@ -34,12 +34,12 @@ def route_users():
             }
         ), HTTPStatus.BAD_REQUEST
     
-# Ruta para abrir login.html.
-@app.route("/main/<int:id>")
+# Ruta para abrir "main.html".
+@app.route("/main/<string:id>")
 def route_main(id):
-    return render_template("main.html", id = id)
+    return render_template("main.html")
     
-# Ruta para abrir register.html.
+# Ruta para abrir "register.html".
 @app.route("/register")
 def route_register():
     return render_template("register.html")
@@ -50,7 +50,7 @@ def route_user():
     data = request.json
 
     try:
-        id = post_user([data['email'], data['password'], data['name'], data['surname']])
+        id = post_user([data['name'], data['surname'], data['address'], data['phone_number'], data['birthday'], data['email'], data['password']])
 
         return jsonify(
             {
@@ -67,10 +67,10 @@ def route_user():
         ), HTTPStatus.BAD_REQUEST
 
 # Ruta para cargar registros de la base de datos.
-@app.route(f"/api/{VERSION}/movimientos")
-def route_movimientos():
+@app.route(f"/api/{VERSION}/movimientos/<string:id>")
+def route_movimientos(id):
     try:
-        records = get_records()
+        records = get_records(id)
         return jsonify(
             {
                 "status": "success",
@@ -107,12 +107,12 @@ def route_tasa(moneda_from, moneda_to):
         ), HTTPStatus.BAD_REQUEST
 
 # Ruta para insertar un registro.
-@app.route(f"/api/{VERSION}/movimiento", methods=["POST"])
-def route_movimiento():
+@app.route(f"/api/{VERSION}/movimiento/<string:id>", methods=["POST"])
+def route_movimiento(id):
     data = request.json
 
     try:
-        id = post_record([data['fecha'], data['hora'], data['from_moneda'], data['from_cantidad'], data['to_moneda'], data['to_cantidad']])
+        id = post_record([data['fecha'], data['hora'], data['from_moneda'], data['from_cantidad'], data['to_moneda'], data['to_cantidad'], data['user_id']], id)
 
         if id != -1:
             return jsonify(
@@ -138,10 +138,10 @@ def route_movimiento():
         ), HTTPStatus.BAD_REQUEST
 
 # Ruta para cargar el balance de la cartera.
-@app.route(f"/api/{VERSION}/status")
-def route_status():
+@app.route(f"/api/{VERSION}/status/<string:id>")
+def route_status(id):
     try:
-        balance = get_status()
+        balance = get_status(id)
 
         return jsonify(
             {

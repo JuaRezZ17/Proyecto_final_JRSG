@@ -1,108 +1,45 @@
-/* Body */
-body {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    font-family: 'Ubuntu', sans-serif;
-    font-size: 1em;
-    background-color: #D1D2F9;
-}
-
-/* Header */
-header {
-    height: 6em;
-    width: 100%;
-    top: 0;
-    background-color: #A3BCF9;
-}
-
-header strong {
-    position: relative;
-    top: 0.4em;
-    left: 8vw;
-    font-size: 2.5em;
-}
-
-menu {
-    position: relative;
-    display: flex;
-    float: right;
-    margin-top: 1.7em;
-    margin-right: 7vw;
-    list-style: none;
-    font-size: 1.2em;
-    font-weight: bold;
-}
-
-menu li {
-    margin-right: 3vw;
-    cursor: pointer;
-}
-
-#menu_li_balance {
-    cursor: default;
-    pointer-events: none;
-}
-
-/* Footer */
-footer {
-    height: 3em;
-    width: 100%;
-    margin-top: auto;
-    background-color: #A3BCF9;
-}
-
-footer strong {
-    position: relative;
-    top: 0.55em;
-    left: 8vw;
-    font-size: 1.2em;
-    white-space: nowrap;
-}
-
-a {
-    color: #576490;
-}
 
 /* index.html */
 /* Div principal */
-.section_container1 {
+.section_1 {
     overflow: hidden;
     margin-top: 3em;
     margin-left: 8vw;
     margin-right: 4vw;
 }
 
-/* Div de la tabla */
-.div_table_index {
+/* main.css = .table_records */
+/* .div_table_index {
     max-height: 385.5px;
     max-width: 1243.09px;
     float: left;
     margin-right: 6.5vw;
     margin-bottom: 35px;
-}
+} */
 
-/* Tabla */
-.table_records {
+/* .table_records {
     display: block;
     max-height: 385.5px;
     max-width: 1243.09px;
     position: relative;
     overflow-y: auto;
     overflow-x: hidden;
-}
+} */
 
-tr {
+/* main.css */
+/* tr {
     height: 35px;
     border-bottom: solid 1.7px #A3BCF9;
-}
+} */
 
-table.table_records th {
-    padding-right: 8vw;
+/* main.css = th */
+/* table.table_records th {
+    padding-right: 7vw;
     font-size: 1.2em;
-}
+} */
 
-::-webkit-scrollbar {
+/* main.css */
+/* ::-webkit-scrollbar {
     width: 10px;
   }
   
@@ -112,19 +49,19 @@ background: #A3BCF9;
 
 ::-webkit-scrollbar-thumb {
 background: #576490; 
-}
+} */
 
 /* Div del estado de cuenta */
 .div_status {
     float: left;
 }
 
-/* Balance de cuenta */
-.label_titulo {
+/* main.css */
+/* .label_titulo {
     margin-right: 0.2em;
     font-size: 1.2em;
     font-weight: bold;
-}
+} */
 
 .span_update {
     position: relative;
@@ -133,10 +70,10 @@ background: #576490;
     cursor: pointer;
 }
 
-/* Balance crypto */
-#div_resumen {
+/* main.css */
+/* #div_resumen {
     display: none;
-}
+} */
 
 #label_balance {
     position: relative;
@@ -162,7 +99,7 @@ table.table_cryptos th {
 
 /* Botón new */
 .btn-lg {
-    width: 65vw;
+    width: 58.8vw;
     border: none;
     background-color: #576490;
     color: white;
@@ -260,7 +197,7 @@ form {
     position: relative;
     display: inline-block;
     margin-top: 8vh;
-    margin-left: 12vw;
+    margin-left: 10vw;
 }
 
 .alert_index {
@@ -293,15 +230,6 @@ form {
     background-color: #A3BCF9;
 }
 
-/* login.html */
-.div_login {
-    text-align: center;
-}
-
-h3 {
-    font-weight: bold;
-}
-
 .div_login_parts {
     margin-top: 3vh;
 }
@@ -322,16 +250,18 @@ h3 {
     margin-left: 1.4em;
 }
 
-.input_login {
+/* base.css = .input_standart */
+/* .input_login {
     width: 17em;
     display: inline-block;
-}
+} */
 
-.div_login_barra {
+/* login.css = label_line */
+/* .div_login_barra {
     margin-top: 2vh;
     color: #A3BCF9;
     font-weight: bold;
-}
+} */
 
 .div_login_register {
     margin-top: 3.7vh;
@@ -339,9 +269,10 @@ h3 {
     margin-bottom: 3em;
 }
 
-.btn_login {
+/* login.css = .button_login */
+/* .btn_login {
     width: 13.5em;
-}
+} */
 
 /* register.html */
 .div_alert_register {
@@ -350,20 +281,23 @@ h3 {
     display: inline-block;
 }
 
-.input_login_small {
+/* base.css = .input_small */
+/* .input_login_small {
     width: 10em;
     display: inline-block;
-}
+} */
 
-.input_login_big {
+/* base.css = .input_big */
+/* .input_login_big {
     width: 20.2em;
     display: inline-block;
-}
+} */
 
 .btn_register {
     width: 16.2em;
 }
 
-.alert_register {
+/* login.html = style="display: none;"  */
+/* .alert_register {
     display: none;
-}
+} */

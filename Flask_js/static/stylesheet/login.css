@@ -1,0 +1,16 @@
+/* login.html */
+.button_login {
+    width: 13.6em;
+    margin-top: 3vh;
+}
+
+.label_line {
+    margin-top: 1em;
+    color: #A3BCF9;
+    font-weight: bold;
+}
+
+.button_register {
+    margin-top: 1.6em; 
+    margin-bottom: 3em;
+}

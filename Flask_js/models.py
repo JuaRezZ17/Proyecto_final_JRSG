@@ -3,9 +3,29 @@ import requests
 from Flask_js.utils.utils import API, API_KEY, cryptos
 from Flask_js.utils.functions import crypto_quantity, all_cryptos_balance
 
+# Función que devuelve una lista con todos los ids, emails y contraseñas de todos los usuarios.
+def get_users():
+    conexion = Conexion("SELECT id, email, password FROM users;")
+
+    users = []
+    for email in conexion.result.fetchall():
+        users.append(email)
+        
+    return users
+
+# Función para insertar un usuario.
+def post_user(user):
+    conexion = Conexion("INSERT INTO users(name, surname, address, phone_number, birthday, email, password) VALUES(?, ?, ?, ?, ?, ?, ?);", user)
+    conexion.conexion.commit()
+    # Guardamos el "id" del último registro.
+    id = conexion.cursor.lastrowid
+    conexion.conexion.close()
+    
+    return id
+
 # Función para cargar los registros.
-def get_records():
-    conexion = Conexion("SELECT * FROM movements ORDER BY date DESC, time DESC;")
+def get_records(id):
+    conexion = Conexion("SELECT * FROM movements WHERE user_id=" + id + " ORDER BY date DESC, time DESC;")
     rows = conexion.result.fetchall()
     columns = conexion.result.description
 
@@ -24,7 +44,7 @@ def get_records():
     conexion.conexion.close()
 
     # Guardamos el balance de cada crypto en un diccionario.
-    crypto_balance = all_cryptos_balance()
+    crypto_balance = all_cryptos_balance(id)
         
     dictionary_list.append(crypto_balance)
 
@@ -39,13 +59,13 @@ def get_rate(moneda_from, moneda_to):
         return ""
 
 # Función para insertar un registro.
-def post_record(records):
+def post_record(records, id):
     # Comprobamos que hay balance positivo en la moneda que se quiere vender.
     if records[2] != "EUR":
-        if crypto_quantity(records[2]) < float(records[3]):
+        if crypto_quantity(records[2], ) < float(records[3]):
             return -1
         
-    conexion = Conexion("INSERT INTO movements(date, time, moneda_from, cantidad_from, moneda_to, cantidad_to) VALUES(?, ?, ?, ?, ?, ?);", records)
+    conexion = Conexion("INSERT INTO movements(date, time, moneda_from, cantidad_from, moneda_to, cantidad_to, user_id) VALUES(?, ?, ?, ?, ?, ?, ?);", records)
     conexion.conexion.commit()
     # Guardamos el "id" del último registro.
     id = conexion.cursor.lastrowid
@@ -54,13 +74,13 @@ def post_record(records):
     return id
 
 # Función para cargar el estado de la cuenta.
-def get_status():
+def get_status(id):
     values = {}
 
-    conexion = Conexion("SELECT ifnull(sum(cantidad_from), 0) FROM movements WHERE moneda_from=\"EUR\";")
+    conexion = Conexion("SELECT ifnull(sum(cantidad_from), 0) FROM movements WHERE moneda_from=\"EUR\" AND user_id=" + id + ";")
     values["invertido"] = conexion.result.fetchall()[0][0]
 
-    conexion = Conexion("SELECT ifnull(sum(cantidad_to), 0) FROM movements WHERE moneda_to=\"EUR\";")
+    conexion = Conexion("SELECT ifnull(sum(cantidad_to), 0) FROM movements WHERE moneda_to=\"EUR\" AND user_id=" + id + ";")
     values["recuperado"] = conexion.result.fetchall()[0][0]
 
     values["valor_compra"] = values["invertido"] - values["recuperado"]
@@ -68,7 +88,7 @@ def get_status():
     # Comprobamos si hay registros de cada crypto para evitar hacer peticiones innecesarias a la API.
     cryptos_total_quantity = 0
     for crypto in cryptos:
-        var_crypto_quantity = crypto_quantity(crypto)
+        var_crypto_quantity = crypto_quantity(crypto, id)
         if var_crypto_quantity == 0:
             continue
         else:
@@ -81,23 +101,3 @@ def get_status():
     values["valor_actual"] = cryptos_total_quantity
 
     return values
-
-# Función que comprueba si un usuario existe.
-def get_users():
-    conexion = Conexion("SELECT id, email, password FROM users;")
-
-    users = []
-    for email in conexion.result.fetchall():
-        users.append(email)
-        
-    return users
-
-# Función para insertar un usuario.
-def post_user(user):
-    conexion = Conexion("INSERT INTO users(email, password, name, surname) VALUES(?, ?, ?, ?);", user)
-    conexion.conexion.commit()
-    # Guardamos el "id" del último registro.
-    id = conexion.cursor.lastrowid
-    conexion.conexion.close()
-    
-    return id

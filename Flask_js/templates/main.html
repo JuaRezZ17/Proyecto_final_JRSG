@@ -5,22 +5,63 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>KeepCoin</title>
         <link rel="stylesheet "href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-        <link rel="stylesheet" href="../static/stylesheet/styles.css">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu&display=swap">
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+        <link rel="stylesheet" href="../static/stylesheet/base.css">
+        <link rel="stylesheet" href="../static/stylesheet/main.css">
         <script src="../static/js/main.js"></script>
     </head>
     <body>
         <header>
             <strong>KeepCoin</strong>
             <menu>
-                <li id="menu_li_balance">Balance</li>
-                <li id="menu_li_resumen">Resumen</li>
+                <li id="li_balance">Balance</li>
+                <li id="li_resumen">Resumen</li>
+                <li id="li_logout" style="margin-right: 0;">Cerrar sesión</li>
             </menu>
         </header>
         <main>
-            <section class="section_container1">
-                <div class="div_table_index">
+            <section class="section_1_index">
+                <div id="div_left">
+                    <table id="table_records" class="table_records">
+                        <tr>
+                            <th>Fecha</th>
+                            <th>Hora</th>
+                            <th>From</th>
+                            <th>Cantidad</th>
+                            <th>To</th>
+                            <th>Cantidad</th>
+                        </tr>
+                    </table>
+                    <button id="button_open" class="btn btn-lg">+</button>
+                </div>
+                <div id="div_balance">
+                    <label id="label_balance" class="label_titulo">Balance de cuenta</label>
+                    <span id="span_update" class="material-icons span_update">update</span>
+                    <br>
+                    <label style="margin-top: 8px;"><strong>Invertido:</strong></label>
+                    <label id="label_invested"></label>
+                    <br>
+                    <label style="margin-top: 11px;"><strong>Recuperado:</strong></label>
+                    <label id="label_recovered"></label>
+                    <br>
+                    <label style="margin-top: 11px;"><strong>V. de compra:</strong></label>
+                    <label id="label_purchase_value"></label>
+                    <br>
+                    <label style="margin-top: 11px;"><strong>V. actual:</strong></label>
+                    <label id="label_current_value"></label>
+                </div>
+                <div id="div_resumen">
+                    <label id="label_resumen" class="label_titulo">Cantidad de cryptos</label>
+                    <table id="table_cryptos" class="table_cryptos">
+                        <tr>
+                            <th>Crypto</th>
+                            <th>Cantidad</th>
+                        </tr>
+                    </table>
+                </div>
+            </section>
+                <!-- <div class="div_table_index">
                     <table id="table_records" class="table_records">
                         <tr>
                             <th>Fecha</th>
@@ -134,7 +175,7 @@
                     <div id="alert_warning" class="alert alert-warning alert_index" role="alert"></div>
                     <div id="alert_danger" class="alert alert-danger alert_index" role="alert"></div>
                 </div>
-            </section>
+            </section> -->
         </main>
         <footer>
             <strong>&copy; 2024 - Todos los derechos reservados. - <a href="https://www.linkedin.com/in/juan-rafael-s%C3%A1nchez-garc%C3%ADa-082100241/">Juan Rafael Sánchez García</a>.</strong>

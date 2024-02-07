@@ -4,7 +4,7 @@ const crypto_balance = new Map();
 let request_get_status = new XMLHttpRequest();
 let request_get_rate = new XMLHttpRequest();
 let request_post_record = new XMLHttpRequest();
-let id = 0;
+let id = "";
 
 // Función que muestra los registros de la base de datos en la tabla.
 function get_records_handler() {
@@ -60,7 +60,7 @@ function get_records_handler() {
                     row.appendChild(cell_moneda_to);
     
                     const cell_cantidad_to = document.createElement("td");
-                    if(records[i].cantidad_to === "EUR") {
+                    if(records[i].moneda_to === "EUR") {
                         cell_cantidad_to.innerText = Math.round(records[i].cantidad_to * 100) / 100;
                     } else {
                         cell_cantidad_to.innerText = Math.round(records[i].cantidad_to * 100000000) / 100000000;
@@ -149,10 +149,10 @@ function status_label_color(valor, label) {
 function show_balance(event) {
     event.preventDefault();
 
-    document.getElementById("menu_li_balance").style.cursor = "default";
-    document.getElementById("menu_li_balance").style.pointerEvents = "none";
-    document.getElementById("menu_li_resumen").style.cursor = "pointer";
-    document.getElementById("menu_li_resumen").style.pointerEvents = "all";
+    document.getElementById("li_balance").style.cursor = "default";
+    document.getElementById("li_balance").style.pointerEvents = "none";
+    document.getElementById("li_resumen").style.cursor = "pointer";
+    document.getElementById("li_resumen").style.pointerEvents = "all";
 
     document.getElementById("div_resumen").style.display = "none";
     document.getElementById("div_balance").style.display = "block";
@@ -162,10 +162,10 @@ function show_balance(event) {
 function show_resumen(event) {
     event.preventDefault();
 
-    document.getElementById("menu_li_resumen").style.cursor = "default";
-    document.getElementById("menu_li_resumen").style.pointerEvents = "none";
-    document.getElementById("menu_li_balance").style.cursor = "pointer";
-    document.getElementById("menu_li_balance").style.pointerEvents = "all";
+    document.getElementById("li_resumen").style.cursor = "default";
+    document.getElementById("li_resumen").style.pointerEvents = "none";
+    document.getElementById("li_balance").style.cursor = "pointer";
+    document.getElementById("li_balance").style.pointerEvents = "all";
 
     document.getElementById("div_balance").style.display = "none";
     document.getElementById("div_resumen").style.display = "block";
@@ -176,7 +176,7 @@ function get_status(event) {
     event.preventDefault();
     hide_alert();
 
-    request_get_status.open("GET", "http://127.0.0.1:5000/api/" + VERSION + "/status", true);
+    request_get_status.open("GET", "http://127.0.0.1:5000/api/" + VERSION + "/status/" + id, true);
     request_get_status.onload = get_status_handler;
     request_get_status.onerror = function() {show_alert(3, "Ha ocurrido un error al cargar el estado de la cuenta.")};
     request_get_status.send();
@@ -335,12 +335,13 @@ function post_record(event) {
             "from_moneda": moneda_from,
             "from_cantidad": cantidad_from,
             "to_moneda": moneda_to,
-            "to_cantidad": cantidad_to
+            "to_cantidad": cantidad_to,
+            "user_id": id
         }
     )
     
     // Realizamos la petición "POST".
-    request_post_record.open("POST", "http://127.0.0.1:5000/api/" + VERSION + "/movimiento", true);
+    request_post_record.open("POST", "http://127.0.0.1:5000/api/" + VERSION + "/movimiento/" + id, true);
     request_post_record.onload = post_record_handler;
     request_post_record.onerror = function() {show_alert(3, "Ha ocurrido un error al insertar el registro.")};
     // Establecemos los valores del encabezado de la solicitud HTTP.
@@ -356,13 +357,13 @@ function post_record_handler() {
             show_alert(1, "El registro se ha guardado correctamente. ID: " + json_response["id"]);
 
             // Actualizo los registros de la tabla.
-            request_get_records.open("GET", "http://127.0.0.1:5000/api/" + VERSION + "/movimientos", true);
+            request_get_records.open("GET", "http://127.0.0.1:5000/api/" + VERSION + "/movimientos/" + id, true);
             request_get_records.onload = get_records_handler;
             request_get_records.onerror = function() {show_alert(3, "No se han podido cargar los registros.")};
             request_get_records.send();
 
             // Actualizo el estado de la cuenta.
-            // request_get_status.open("GET", "http://127.0.0.1:5000/api/" + VERSION + "/status", true);
+            // request_get_status.open("GET", "http://127.0.0.1:5000/api/" + VERSION + "/status/" + id, true);
             // request_get_status.onload = get_status_handler;
             // request_get_status.onerror = function() {alert("Ha ocurrido un error al cargar el estado de la cuenta.")};
             // request_get_status.send();
@@ -411,6 +412,13 @@ function hide_alert() {
         document.getElementById("alert_danger").style.display = "none";
 }
 
+// Función que se lanza cuando se hace click en la opción "Cerrar sesión".
+function log_out(event) {
+    event.preventDefault();
+
+    window.location.href = "http://127.0.0.1:5000/login";
+}
+
 // En el "onload" están todos los métodos que se lanzan al abrir la página.
 window.onload = function() {
     let current_url = window.location.href;
@@ -418,24 +426,28 @@ window.onload = function() {
     id = current_url.substring(last_bar+1, current_url.length);
 
     // Lanzamos la petición para obtener los registros.
-    request_get_records.open("GET", "http://127.0.0.1:5000/api/" + VERSION + "/movimientos", true);
+    request_get_records.open("GET", "http://127.0.0.1:5000/api/" + VERSION + "/movimientos/" + id, true);
     request_get_records.onload = get_records_handler;
     request_get_records.onerror = function() {show_alert(3, "Ha ocurrido un error al cargar los registros.")};
     request_get_records.send();
 
     // Lanzamos la petición para obtener el estado de la cuenta.
-    // request_get_status.open("GET", "http://127.0.0.1:5000/api/" + VERSION + "/status", true);
+    // request_get_status.open("GET", "http://127.0.0.1:5000/api/" + VERSION + "/status/" + id, true);
     // request_get_status.onload = get_status_handler;
     // request_get_status.onerror = function() {alert("Ha ocurrido un error al cargar el estado de la cuenta.")};
     // request_get_status.send();
 
-    // Evento que se lanza cuando se pulsa el botón balance del menú.
-    let balance = document.getElementById("menu_li_balance");
+    // Evento que se lanza cuando se pulsa el botón "Balance".
+    let balance = document.getElementById("li_balance");
     balance.addEventListener("click", show_balance);
 
-    // Evento que se lanza cuando se pulsa el botón resumen del menú.
-    let resumen = document.getElementById("menu_li_resumen");
+    // Evento que se lanza cuando se pulsa el botón "Resumen".
+    let resumen = document.getElementById("li_resumen");
     resumen.addEventListener("click", show_resumen);
+
+    // Evento que se lanza cuando se pulsa el botón "Cerrar sesión".
+    let logout = document.getElementById("li_logout");
+    logout.addEventListener("click", log_out);
 
     // Evento que se lanza cuando queremos actualizar el estado de la cuenta.
     let update = document.getElementById("span_update");
