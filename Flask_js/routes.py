@@ -2,8 +2,8 @@ from Flask_js import app
 from flask import redirect, render_template, jsonify, request
 from Flask_js.utils.utils import VERSION
 from Flask_js.models import *
-import sqlite3
 from http import HTTPStatus
+import sqlite3
 
 # Ruta por defecto donde abre flask. Redirecciona a login.html.
 @app.route("/")
@@ -34,11 +34,6 @@ def route_users():
             }
         ), HTTPStatus.BAD_REQUEST
     
-# Ruta para abrir "main.html".
-@app.route("/main/<string:id>")
-def route_main(id):
-    return render_template("main.html")
-    
 # Ruta para abrir "register.html".
 @app.route("/register")
 def route_register():
@@ -65,7 +60,12 @@ def route_user():
                 "mensaje": str(sqlite3.Error)
             }
         ), HTTPStatus.BAD_REQUEST
-
+    
+# Ruta para abrir "main.html".
+@app.route("/main/<string:id>")
+def route_main(id):
+    return render_template("main.html")
+    
 # Ruta para cargar registros de la base de datos.
 @app.route(f"/api/{VERSION}/movimientos/<string:id>")
 def route_movimientos(id):
@@ -85,7 +85,27 @@ def route_movimientos(id):
             }
         ), HTTPStatus.BAD_REQUEST
     
-# Ruta para calcular la tasa de moneda_from a moneda_to.
+# Ruta para cargar el balance de la cartera.
+@app.route(f"/api/{VERSION}/status/<string:id>")
+def route_status(id):
+    try:
+        balance = get_status(id)
+
+        return jsonify(
+            {
+                "status": "success",
+                "data": balance
+            }
+        ), HTTPStatus.OK
+    except sqlite3.Error:
+        return jsonify(
+            {
+                "status": "fail",
+                "mensaje": str(sqlite3.Error)
+            }
+        ), HTTPStatus.BAD_REQUEST
+    
+# Ruta para calcular la tasa de "moneda_from" a "moneda_to".
 @app.route(f"/api/{VERSION}/tasa/<string:moneda_from>/<string:moneda_to>")
 def route_tasa(moneda_from, moneda_to):
     rate = get_rate(moneda_from, moneda_to)
@@ -106,7 +126,7 @@ def route_tasa(moneda_from, moneda_to):
             }
         ), HTTPStatus.BAD_REQUEST
 
-# Ruta para insertar un registro.
+# Ruta para guardar un registro.
 @app.route(f"/api/{VERSION}/movimiento/<string:id>", methods=["POST"])
 def route_movimiento(id):
     data = request.json
@@ -129,26 +149,6 @@ def route_movimiento(id):
                     "mensaje": "Saldo insuficiente."
                 }
             ), HTTPStatus.OK
-    except sqlite3.Error:
-        return jsonify(
-            {
-                "status": "fail",
-                "mensaje": str(sqlite3.Error)
-            }
-        ), HTTPStatus.BAD_REQUEST
-
-# Ruta para cargar el balance de la cartera.
-@app.route(f"/api/{VERSION}/status/<string:id>")
-def route_status(id):
-    try:
-        balance = get_status(id)
-
-        return jsonify(
-            {
-                "status": "success",
-                "data": balance
-            }
-        ), HTTPStatus.OK
     except sqlite3.Error:
         return jsonify(
             {

@@ -8,5 +8,5 @@ class Conexion:
         self.conexion = sqlite3.connect(ORIGIN_DATA)
         # Creamos un cursor para acceder a los datos.
         self.cursor = self.conexion.cursor()
-        # Guardamos los resultados de la query.
+        # Ejecutamos la query y guardamos los resultados.
         self.result = self.cursor.execute(querySql, params)

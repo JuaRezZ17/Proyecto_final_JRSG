@@ -47,7 +47,6 @@ menu li {
 }
 
 /* Main */
-/* login.html */
 .section_1 {
     overflow: hidden;
     margin-top: 3em;
@@ -57,10 +56,6 @@ menu li {
 
 .div_centered {
     text-align: center;
-}
-
-h3 {
-    font-weight: bold;
 }
 
 .input_standart {
@@ -85,7 +80,6 @@ h3 {
     display: none;
 }
 
-/* register.html */
 .input_small {
     width: 10em;
     display: inline-block;
@@ -101,6 +95,10 @@ h3 {
 span {
     color: #576490;
     cursor: pointer;
+}
+
+.label_standart {
+    margin-right: 0.5em;
 }
 
 /* Footer */

@@ -1,1 +1,1 @@
-ORIGIN_DATA = "Direccion de tu base de datos"
+ORIGIN_DATA = "Direccion de tu base de datos."

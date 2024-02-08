@@ -1,7 +1,7 @@
 from Flask_js.conexion import Conexion
+from Flask_js.utils.functions import crypto_quantity, all_cryptos_balance
 import requests
 from Flask_js.utils.utils import API, API_KEY, cryptos
-from Flask_js.utils.functions import crypto_quantity, all_cryptos_balance
 
 # Función que devuelve una lista con todos los ids, emails y contraseñas de todos los usuarios.
 def get_users():
@@ -13,7 +13,7 @@ def get_users():
         
     return users
 
-# Función para insertar un usuario.
+# Función que insertar un usuario en la base de datos.
 def post_user(user):
     conexion = Conexion("INSERT INTO users(name, surname, address, phone_number, birthday, email, password) VALUES(?, ?, ?, ?, ?, ?, ?);", user)
     conexion.conexion.commit()
@@ -23,7 +23,7 @@ def post_user(user):
     
     return id
 
-# Función para cargar los registros.
+# Función que carga los registros de un usuario específico.
 def get_records(id):
     conexion = Conexion("SELECT * FROM movements WHERE user_id=" + id + " ORDER BY date DESC, time DESC;")
     rows = conexion.result.fetchall()
@@ -49,29 +49,6 @@ def get_records(id):
     dictionary_list.append(crypto_balance)
 
     return dictionary_list
-
-# Función para consultar la tasa de moneda_from a moneda_to en la API.
-def get_rate(moneda_from, moneda_to):
-    response = requests.get(API + moneda_from + "/" + moneda_to + "?apikey=" + API_KEY)
-    if response.status_code == 200:
-        return response.json()["rate"]
-    else:
-        return ""
-
-# Función para insertar un registro.
-def post_record(records, id):
-    # Comprobamos que hay balance positivo en la moneda que se quiere vender.
-    if records[2] != "EUR":
-        if crypto_quantity(records[2], ) < float(records[3]):
-            return -1
-        
-    conexion = Conexion("INSERT INTO movements(date, time, moneda_from, cantidad_from, moneda_to, cantidad_to, user_id) VALUES(?, ?, ?, ?, ?, ?, ?);", records)
-    conexion.conexion.commit()
-    # Guardamos el "id" del último registro.
-    id = conexion.cursor.lastrowid
-    conexion.conexion.close()
-    
-    return id
 
 # Función para cargar el estado de la cuenta.
 def get_status(id):
@@ -101,3 +78,26 @@ def get_status(id):
     values["valor_actual"] = cryptos_total_quantity
 
     return values
+
+# Función para consultar la tasa de moneda_from a moneda_to en la API.
+def get_rate(moneda_from, moneda_to):
+    response = requests.get(API + moneda_from + "/" + moneda_to + "?apikey=" + API_KEY)
+    if response.status_code == 200:
+        return response.json()["rate"]
+    else:
+        return ""
+
+# Función para insertar un registro en la base de datos.
+def post_record(records, id):
+    # Comprobamos que hay balance positivo en la moneda que se quiere vender.
+    if records[2] != "EUR":
+        if crypto_quantity(records[2], ) < float(records[3]):
+            return -1
+        
+    conexion = Conexion("INSERT INTO movements(date, time, moneda_from, cantidad_from, moneda_to, cantidad_to, user_id) VALUES(?, ?, ?, ?, ?, ?, ?);", records)
+    conexion.conexion.commit()
+    # Guardamos el "id" del último registro.
+    id = conexion.cursor.lastrowid
+    conexion.conexion.close()
+    
+    return id

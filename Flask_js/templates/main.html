@@ -4,7 +4,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>KeepCoin</title>
-        <link rel="stylesheet "href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu&display=swap">
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
         <link rel="stylesheet" href="../static/stylesheet/base.css">
@@ -17,13 +17,13 @@
             <menu>
                 <li id="li_balance">Balance</li>
                 <li id="li_resumen">Resumen</li>
-                <li id="li_logout" style="margin-right: 0;">Cerrar sesión</li>
+                <li id="li_logout">Cerrar sesión</li>
             </menu>
         </header>
         <main>
-            <section class="section_1_index">
-                <div id="div_left">
-                    <table id="table_records" class="table_records">
+            <section class="section_1_main">
+                <div class="div_left">
+                    <table id="table_records">
                         <tr>
                             <th>Fecha</th>
                             <th>Hora</th>
@@ -34,26 +34,71 @@
                         </tr>
                     </table>
                     <button id="button_open" class="btn btn-lg">+</button>
+                    <form id="form">
+                        <label class="label_standart label_moneda_from" for="floatingInput"><strong>From:</strong></label>
+                        <select id="select_moneda_from" class="form-select select_moneda select_moneda_from">
+                            <option value="" selected disabled hidden>Elija una moneda:</option>
+                            <option value="EUR">EUR</option>
+                            <option value="BTC">BTC</option>
+                            <option value="ETH">ETH</option>
+                            <option value="USDT">USDT</option>
+                            <option value="BNB">BNB</option>
+                            <option value="XRP">XRP</option>
+                            <option value="ADA">ADA</option>
+                            <option value="SOL">SOL</option>
+                            <option value="DOT">DOT</option>
+                            <option value="MATIC">MATIC</option>
+                        </select>
+                        <label class="label_standart" for="floatingInput"><strong>To:</strong></label>
+                        <select id="select_moneda_to" class="form-select select_moneda">
+                            <option value="" selected disabled hidden>Elija una moneda:</option>
+                            <option value="EUR">EUR</option>
+                            <option value="BTC">BTC</option>
+                            <option value="ETH">ETH</option>
+                            <option value="USDT">USDT</option>
+                            <option value="BNB">BNB</option>
+                            <option value="XRP">XRP</option>
+                            <option value="ADA">ADA</option>
+                            <option value="SOL">SOL</option>
+                            <option value="DOT">DOT</option>
+                            <option value="MATIC">MATIC</option>
+                        </select>
+                        <br>
+                        <label class="label_standart label_cantidad_from" for="floatingInput"><strong>Cantidad:</strong></label>
+                        <input id="input_cantidad_from" class="form-control" type="number">
+                        <span id="span_calculate" class="material-icons">calculate</span>
+                        <label class="label_standart" for="floatingInput"><strong>Cantidad:</strong></label>
+                        <label id="label_cantidad_to"></label>
+                        <div id="alert_success" class="alert alert-success alert_standart" role="alert"></div>
+                        <div id="alert_warning" class="alert alert-warning alert_standart" role="alert"></div>
+                        <div id="alert_danger" class="alert alert-danger alert_standart" role="alert"></div>
+                        <br>
+                        <label class="label_standart label_pu" for="floatingInput"><strong>PU:</strong></label>
+                        <label id="label_pu"></label>
+                        <br>
+                        <button id="button_close" class="btn btn-md" type="button">Cerrar</button>
+                        <button id="button_save" class="btn btn-md" type="button">Guardar</button>
+                    </form>
                 </div>
                 <div id="div_balance">
                     <label id="label_balance" class="label_titulo">Balance de cuenta</label>
                     <span id="span_update" class="material-icons span_update">update</span>
                     <br>
-                    <label style="margin-top: 8px;"><strong>Invertido:</strong></label>
+                    <label><strong>Invertido:</strong></label>
                     <label id="label_invested"></label>
                     <br>
-                    <label style="margin-top: 11px;"><strong>Recuperado:</strong></label>
+                    <label><strong>Recuperado:</strong></label>
                     <label id="label_recovered"></label>
                     <br>
-                    <label style="margin-top: 11px;"><strong>V. de compra:</strong></label>
+                    <label><strong>V. de compra:</strong></label>
                     <label id="label_purchase_value"></label>
                     <br>
-                    <label style="margin-top: 11px;"><strong>V. actual:</strong></label>
+                    <label><strong>V. actual:</strong></label>
                     <label id="label_current_value"></label>
                 </div>
                 <div id="div_resumen">
                     <label id="label_resumen" class="label_titulo">Cantidad de cryptos</label>
-                    <table id="table_cryptos" class="table_cryptos">
+                    <table id="table_cryptos">
                         <tr>
                             <th>Crypto</th>
                             <th>Cantidad</th>
@@ -61,124 +106,10 @@
                     </table>
                 </div>
             </section>
-                <!-- <div class="div_table_index">
-                    <table id="table_records" class="table_records">
-                        <tr>
-                            <th>Fecha</th>
-                            <th>Hora</th>
-                            <th>From</th>
-                            <th>Cantidad</th>
-                            <th>To</th>
-                            <th>Cantidad</th>
-                        </tr>
-                    </table>
-                </div>
-                <div class="div_status">
-                    <div id="div_balance">
-                        <label id="label_balance" class="label_titulo">Balance de cuenta</label>
-                        <span id="span_update" class="material-icons span_update">update</span>
-                        <br>
-                        <div style="margin-top: 9px;">
-                            <label><strong>Invertido:</strong></label>
-                            <label id="label_invested"></label>
-                        </div>
-                        <div style="margin-top: 11px;">
-                            <label><strong>Recuperado:</strong></label>
-                            <label id="label_recovered"></label>
-                        </div>
-                        <div style="margin-top: 11px;">
-                            <label><strong>V. de compra:</strong></label>
-                            <label id="label_purchase_value"></label>
-                        </div>
-                        <div style="margin-top: 11px;">
-                            <label><strong>V. actual:</strong></label>
-                            <label id="label_current_value"></label>
-                        </div>
-                    </div>
-                    <div id="div_resumen">
-                        <label id="label_resumen" class="label_titulo">Cantidad de cryptos</label>
-                        <table id="table_cryptos" class="table_cryptos">
-                            <tr>
-                                <th>Crypto</th>
-                                <th>Cantidad</th>
-                            </tr>
-                        </table>
-                    </div>                    
-                </div>
-            </section>
-            <section class="section_container2">
-                <div id="div_index_new">
-                    <button id="button_open" class="btn btn-lg">+</button>
-                </div>
-                <div class="div_form_size">
-                    <form id="form">
-                        <div class="div_form">
-                            <label for="floatingInput" class="label_select"><strong>From:</strong></label>
-                            <select id="select_moneda_from" class="form-select select_moneda">
-                                <option value="" selected disabled hidden>Elija una moneda:</option>
-                                <option value="EUR">EUR</option>
-                                <option value="BTC">BTC</option>
-                                <option value="ETH">ETH</option>
-                                <option value="USDT">USDT</option>
-                                <option value="BNB">BNB</option>
-                                <option value="XRP">XRP</option>
-                                <option value="ADA">ADA</option>
-                                <option value="SOL">SOL</option>
-                                <option value="DOT">DOT</option>
-                                <option value="MATIC">MATIC</option>
-                            </select>
-                        </div>
-                        <div class="div_form">
-                            <label for="floatingInput" class="label_select"><strong>To:</strong></label>
-                            <select id="select_moneda_to" class="form-select select_moneda">
-                                <option value="" selected disabled hidden>Elija una moneda:</option>
-                                <option value="EUR">EUR</option>
-                                <option value="BTC">BTC</option>
-                                <option value="ETH">ETH</option>
-                                <option value="USDT">USDT</option>
-                                <option value="BNB">BNB</option>
-                                <option value="XRP">XRP</option>
-                                <option value="ADA">ADA</option>
-                                <option value="SOL">SOL</option>
-                                <option value="DOT">DOT</option>
-                                <option value="MATIC">MATIC</option>
-                            </select>
-                        </div>
-                        <br>
-                        <div class="div_form">
-                            <label for="floatingInput" class="label_select"><strong>Cantidad:</strong></label>
-                            <input id="input_cantidad_from" type="number" class="form-control input_cantidad_from">
-                            <span id="span_calculate" class="material-icons span_calculate" style="font-size: 40px;">calculate</span>
-                        </div>
-                        <div class="div_form">
-                            <label for="floatingInput"  class="label_select"><strong>Cantidad:</strong></label>
-                            <label id="label_cantidad_to" class="label_cantidad_to"></label>
-                        </div>
-                        <br>
-                        <div class="div_space1">
-                            <label></label>
-                        </div>
-                        <div class="div_form">
-                            <label for="floatingInput" class="label_select"><strong>PU:</strong></label>
-                            <label id="label_pu" class="label_pu"></label>
-                        </div>
-                        <br>
-                        <div class="div_space2"></div>
-                        <div class="div_form">
-                            <button id="button_close" type="button" class="btn btn-md">Cerrar</button>
-                            <button id="button_save" type="button" class="btn btn-md">Guardar</button>
-                        </div>
-                    </form>
-                </div>
-                <div class="div_alert">
-                    <div id="alert_success" class="alert alert-success alert_index" role="alert"></div>
-                    <div id="alert_warning" class="alert alert-warning alert_index" role="alert"></div>
-                    <div id="alert_danger" class="alert alert-danger alert_index" role="alert"></div>
-                </div>
-            </section> -->
         </main>
         <footer>
             <strong>&copy; 2024 - Todos los derechos reservados. - <a href="https://www.linkedin.com/in/juan-rafael-s%C3%A1nchez-garc%C3%ADa-082100241/">Juan Rafael Sánchez García</a>.</strong>
         </footer>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
     </body>
 </html>

@@ -3,6 +3,58 @@ const VERSION = "v1"
 const users = [];
 let request_post_user = new XMLHttpRequest();
 
+// En el "onload" están todos los métodos que se lanzan al abrir "register.html".
+window.onload = function() {
+    // Llamamos a la ruta "/users" para conseguir los datos de los emails existentes.
+    request_get_emails.open("GET", "http://127.0.0.1:5000/api/" + VERSION + "/users", true);
+    request_get_emails.onload = function() {
+        if (this.readyState === 4) {
+            if (this.status === 200) {
+                const json_users = JSON.parse(this.responseText);
+                const array_users = json_users.users;
+
+                for(let i=0; i<array_users.length; i++) {
+                    // Guardamos los correos en un array.
+                    users[i] = array_users[i][1];
+                }
+            }
+        }
+    };
+    request_get_emails.onerror = function() {
+        show_alert(3, "Ha ocurrido un error al cargar los usuarios.")
+    };
+    request_get_emails.send();
+
+    // Eventos que se lanzan cuando se modifica el valor de "input_email" o "input_password".
+    let name = document.getElementById("input_name");
+    name.addEventListener("change", hide_alert);
+
+    let surname = document.getElementById("input_surname");
+    surname.addEventListener("change", hide_alert);
+
+    let address = document.getElementById("input_address");
+    address.addEventListener("change", hide_alert);
+
+    let phone = document.getElementById("input_phone");
+    phone.addEventListener("change", hide_alert);
+
+    let birthday = document.getElementById("input_birthday");
+    birthday.addEventListener("change", hide_alert);
+
+    let email = document.getElementById("input_email");
+    email.addEventListener("change", hide_alert);
+
+    let passwd1 = document.getElementById("input_password_1");
+    passwd1.addEventListener("change", hide_alert);
+
+    let passwd2 = document.getElementById("input_password_2");
+    passwd2.addEventListener("change", hide_alert);
+
+    // Evento que se lanza cuando se hace click en el botón "Registrar".
+    let register = document.getElementById("button_register");
+    register.addEventListener("click", post_user);
+}
+
 // Función que muestra las alertas.
 function show_alert(num, message) {
     if(num === 1) {
@@ -10,20 +62,27 @@ function show_alert(num, message) {
         document.getElementById("alert_success").style.display = "inline-block";
         setTimeout(function() {
             document.getElementById("alert_success").style.display = "none";
-        }, 3000)
+        }, 3000);
     } else if(num === 2) {
         document.getElementById("alert_warning").innerText = message;
         document.getElementById("alert_warning").style.display = "inline-block";
         setTimeout(function() {
             document.getElementById("alert_warning").style.display = "none";
-        }, 3000)
+        }, 3000);
     } else if(num === 3) {
         document.getElementById("alert_danger").innerText = message;
         document.getElementById("alert_danger").style.display = "inline-block";
         setTimeout(function() {
             document.getElementById("alert_danger").style.display = "none";
-        }, 3000)
+        }, 3000);
     }
+}
+
+// Función que esconde las alertas.
+function hide_alert() {
+    document.getElementById("alert_success").style.display = "none";
+    document.getElementById("alert_warning").style.display = "none";
+    document.getElementById("alert_danger").style.display = "none";
 }
 
 // Función que se lanza cuando se hace click en el botón "Registrar".
@@ -105,7 +164,7 @@ function check_fields() {
     return true;
 }
 
-// Función que comprueba si eres mayor de edad.
+// Función que devuelve si eres mayor de edad o no.
 function validate_age(birthday) {
     birthday = birthday.replace(/-/g, "/");
 
@@ -134,31 +193,4 @@ function post_user_handler() {
             show_alert(3, "Ha ocurrido un error al crear el usuario.");
         }
     }
-}
-
-// En el "onload" están todos los métodos que se lanzan al abrir "register.html".
-window.onload = function() {
-    // Llamamos a la ruta "/users" para conseguir los datos de los emails existentes.
-    request_get_emails.open("GET", "http://127.0.0.1:5000/api/" + VERSION + "/users", true);
-    request_get_emails.onload = function() {
-        if (this.readyState === 4) {
-            if (this.status === 200) {
-                const json_users = JSON.parse(this.responseText);
-                const array_users = json_users.users;
-
-                for(let i=0; i<array_users.length; i++) {
-                    // Guardamos los correos en un array.
-                    users[i] = array_users[i][1];
-                }
-            }
-        }
-    };
-    request_get_emails.onerror = function() {
-        show_alert(3, "Ha ocurrido un error al cargar los usuarios.")
-    };
-    request_get_emails.send();
-
-    // Evento que se lanza cuando se hace click en el botón "Registrar".
-    let register = document.getElementById("button_register");
-    register.addEventListener("click", post_user);
 }

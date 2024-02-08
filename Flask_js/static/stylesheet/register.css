@@ -1,4 +1,8 @@
 /* register.html */
+#input_birthday {
+    color: #6c757d;
+}
+
 .button_register {
     width: 16.2em;
     margin-top: 3vh;
