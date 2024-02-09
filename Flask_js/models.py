@@ -91,7 +91,7 @@ def get_rate(moneda_from, moneda_to):
 def post_record(records, id):
     # Comprobamos que hay balance positivo en la moneda que se quiere vender.
     if records[2] != "EUR":
-        if crypto_quantity(records[2], ) < float(records[3]):
+        if crypto_quantity(records[2], id) < float(records[3]):
             return -1
         
     conexion = Conexion("INSERT INTO movements(date, time, moneda_from, cantidad_from, moneda_to, cantidad_to, user_id) VALUES(?, ?, ?, ?, ?, ?, ?);", records)
