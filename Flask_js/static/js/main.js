@@ -268,7 +268,6 @@ function show_balance(event) {
 // Función que actualiza el estado de la cuenta.
 function get_status(event) {
     event.preventDefault();
-    hide_alert();
 
     request_get_status.open("GET", "http://127.0.0.1:5000/api/" + VERSION + "/status/" + id, true);
     request_get_status.onload = get_status_handler;
@@ -290,7 +289,6 @@ function show_form(event) {
 // Función que se lanza cuando hay que resetear el valor de "label_cantidad_to" y "label_pu".
 function reset_values(event) {
     event.preventDefault();
-    hide_alert();
 
     document.getElementById("label_cantidad_to").innerText = "";
     document.getElementById("label_pu").innerText = "";
@@ -410,7 +408,6 @@ function close_form(event) {
 // Función que se lanza para insertar un registro.
 function post_record(event) {
     event.preventDefault();
-    hide_alert();
 
     const cantidad_from = document.getElementById("input_cantidad_from").value;
     const moneda_from = document.getElementById("select_moneda_from").value;
